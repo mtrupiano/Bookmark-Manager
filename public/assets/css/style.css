@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
+body {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: 'Maven Pro', sans-serif;
+}
+
+.collapsible-body ul li a.nothing-here {
+  color: gray;
+  text-align: center;
+}
+
+.collapsible-body ul li a.nothing-here:hover {
+  background-color:  #fff;
+  
+}
+
+button.sidenav-trigger {
+  display: none;
+  height: 35px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.sidenav {
+  top: auto;
+}
+
+.sidenav .collapsible-body li > .collapsible-body {
+  padding-left: 5%;
+}
+
+@media only screen and (max-width: 992.8px) {
+  button.sidenav-trigger {
+    display: flex;
+  }
+  .sidenav {
+    top: 0;
+  }
+}

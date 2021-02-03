@@ -1,0 +1,36 @@
+
+<ul class="sidenav sidenav-fixed" id="main-menu">
+    <li>
+        <ul class="collapsible expandable"> 
+            {{#each collections}}
+                {{> collectionPartial}}
+            {{/each}}
+            {{#each bookmarks}}
+                {{> bookmarkPartial}}
+            {{/each}}
+        </ul>
+    </li>
+</ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems, {"accordion": false});
+    });
+
+    $(document).ready(() => {
+
+        $('.sidenav').sidenav();
+
+        $('.bookmark-li').click( (event) => {
+            event.preventDefault();
+            const target = $(event.target);
+            console.log(target.attr("value"));
+        });
+
+
+    });
+
+
+
+</script>

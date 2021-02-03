@@ -1,0 +1,33 @@
+<li>
+    <a value="{{id}}" class="collapsible-header">
+        <i class="material-icons">folder</i>
+        {{name}}
+        {{#if color}}
+            <i class="material-icons right" 
+                style="margin-right: 0; color: {{color}}">circle</i>
+        {{/if}}
+    </a>
+
+    <div class="collapsible-body">
+        <ul class="collapsible expandable">
+            {{#if collections}}
+            {{#each collections}}
+                {{> collectionPartial}}
+            {{/each}}
+            {{/if}}
+            {{#if bookmarks}}
+            {{#each bookmarks}}
+                {{> bookmarkPartial}}
+            {{/each}}
+            {{/if}}
+            {{#unless bookmarks}}
+            {{#unless collections}}
+                <li>
+                    <a class="nothing-here" href="#">Nothing here!</a>
+                </li>
+            {{/unless}}
+            {{/unless}}
+        </ul>
+    </div>
+    
+</li>

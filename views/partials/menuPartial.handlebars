@@ -1,0 +1,12 @@
+<li style="background-color: {{color}};" data-color="{{color}}">
+    <a href="#" data-type="collection" data-id="{{id}}"><i class="fas fa-trash delete"></i><i class="fas fa-edit edit"></i>{{name}}</a>
+    <h2>{{name}}</h2>
+    <ul>
+        {{#each collections}}
+        {{> menuPartial}}
+        {{/each}}
+        {{#each bookmarks}}
+        {{> menuBookmarkPartial}}
+        {{/each}}
+    </ul>
+</li>
