@@ -11,6 +11,7 @@
         </ul>
     </li>
 </ul>
+
 <script type="text/javascript" src="https://chir.ag/projects/ntc/ntc.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -26,7 +27,13 @@
         $('.bookmark-li').click( (event) => {
             event.preventDefault();
             const target = $(event.target);
-            console.log(target.attr("value"));
+            let id;
+            if (target.prop("tagName") === "I") {
+                id = target.parent().attr("value");
+            } else {
+                id = target.attr("value");
+            }
+            console.log(id);
         });
 
         $('.color-dropdown-select').click( (event) => {
@@ -34,6 +41,7 @@
             var newColor, targetEntityID, apiURL;
 
             if (target.prop("tagName") === "A") {
+
                 if (target.parent().parent().hasClass("collection-color-dropdown")) {
                     apiURL = "/api/collections/color"
                 } else {
@@ -41,7 +49,9 @@
                 }
                 targetEntityID = target.parent().parent().attr("data-id");
                 newColor = $(target.children()[0]).css("color");
+
             } else if (target.prop("tagName") === "I") {
+
                 if (target.parent().parent().parent().hasClass("collection-color-dropdown")) {
                     apiURL = "/api/collections/color"
                 } else {
@@ -49,10 +59,8 @@
                 }
                 targetEntityID = target.parent().parent().parent().attr("data-id");
                 newColor = target.css("color");
-            }
 
-            console.log(targetEntityID);
-            console.log(apiURL)
+            }
 
             $.ajax({
                 url: apiURL,
