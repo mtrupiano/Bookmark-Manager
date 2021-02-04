@@ -38,26 +38,30 @@
 
         $('.color-dropdown-select').click( (event) => {
             const target = $(event.target);
-            var newColor, targetEntityID, apiURL;
+            var newColor, targetEntityID, apiURL, targetLink;
 
             if (target.prop("tagName") === "A") {
 
-                if (target.parent().parent().hasClass("collection-color-dropdown")) {
+                targetLink = target.parent().parent();
+
+                if (targetLink.hasClass("collection-color-dropdown")) {
                     apiURL = "/api/collections/color"
                 } else {
                     apiURL = "/api/bookmarks/color"
                 }
-                targetEntityID = target.parent().parent().attr("data-id");
+                targetEntityID = targetLink.attr("data-id");
                 newColor = $(target.children()[0]).css("color");
 
             } else if (target.prop("tagName") === "I") {
 
-                if (target.parent().parent().parent().hasClass("collection-color-dropdown")) {
+                targetLink = target.parent().parent().parent();
+
+                if (targetLink.hasClass("collection-color-dropdown")) {
                     apiURL = "/api/collections/color"
                 } else {
                     apiURL = "/api/bookmarks/color"
                 }
-                targetEntityID = target.parent().parent().parent().attr("data-id");
+                targetEntityID = targetLink.attr("data-id");
                 newColor = target.css("color");
 
             }
@@ -71,11 +75,21 @@
                 },
                 processData: true
             }).then( () => {
-                location.replace("/");
+                $(targetLink.prev().children()[0]).css("color", newColor);
             }).fail( (err) => {
                 alert(err.responseText)
             });
         });
+
+        $('#new-collection').click( (event) => {
+            console.log("Hello")
+        });
+
+        $('#new-bookmark').click( (event) => {
+            console.log("Hello");
+        });
+
+
 
 
     });

@@ -32,6 +32,10 @@ button.sidenav-trigger {
   padding-left: 5%;
 }
 
+.sidenav li {
+  width: 85%;
+}
+
 
 @media only screen and (max-width: 992.8px) {
   button.sidenav-trigger {

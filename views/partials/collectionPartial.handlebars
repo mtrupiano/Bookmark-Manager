@@ -3,6 +3,14 @@
         <i class="material-icons">folder</i>
         {{name}}
 
+        <a href="#" class="dropdown-trigger add-to-collection-btn" data-target="add-to-collection">
+            <i class="material-icons">add</i>
+        </a>
+        <ul id="add-to-collection" class="dropdown-content">
+            <li><a id="new-collection" data-id="{{id}}" href="#">New Collection</a></li>
+            <li><a id="new-bookmark" data-id="{{id}}" href="#">New Bookmark</a></li>
+        </ul>
+
         {{#if color}}
         <a href="#" class="dropdown-trigger" data-target="collection-color-dropdown-{{id}}">
             <i class="material-icons right" style="margin-right: 0; color: {{color}}">circle</i>
