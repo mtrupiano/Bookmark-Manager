@@ -122,7 +122,7 @@ router.put("/color", function(request, response) {
             id: { [ Op.in ]: request.body.ids}
         }
     }).then( (result) => {
-        response.json(result.affectedRows);
+        response.json(result);
     }).catch((err) => {
         response.status(500).json(err);
     });

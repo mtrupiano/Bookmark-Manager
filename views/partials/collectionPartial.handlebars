@@ -5,6 +5,41 @@
         {{#if color}}
             <i class="material-icons right" 
                 style="margin-right: 0; color: {{color}}">circle</i>
+        {{#if color}}
+        <a href="#" class="dropdown-trigger" data-target="color-dropdown-{{id}}">
+            <i class="material-icons right" style="margin-right: 0; color: {{color}}">circle</i>
+        </a>
+        <ul id="color-dropdown-{{id}}" 
+            class="dropdown-content collection-color-dropdown" data-id="{{id}}">
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: white">circle</i>
+                </a></li>
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: black">circle</i>
+                </a></li>
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: red">circle</i>
+                </a></li>
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: green">circle</i>
+                </a></li>
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: blue">circle</i>
+                </a></li>
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: yellow">circle</i>
+                </a></li>
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: orange">circle</i>
+                </a></li>
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: purple">circle</i>
+                </a></li>
+            <li><a href="#!" class="color-dropdown-select">
+                    <i class="material-icons right" style="margin-right: 0; color: pink">circle</i>
+                </a></li>
+        </ul>
+        {{/if}}
         {{/if}}
     </a>
 

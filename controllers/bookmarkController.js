@@ -230,11 +230,13 @@ router.put("/color", function(request, response) {
         return;
     }
 
+    console.log(request.body);
+
     db.Bookmark.update({
         color: request.body.newColor
     }, {
         where: {
-            id: { [ Op.in ]: request.body.id }
+            id: { [ Op.in ]: request.body.ids }
         }
     }).then((result) => {
         if (result.affectedRows === 0) {

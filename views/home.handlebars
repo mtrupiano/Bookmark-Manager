@@ -11,7 +11,7 @@
         </ul>
     </li>
 </ul>
-
+<script type="text/javascript" src="https://chir.ag/projects/ntc/ntc.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.collapsible');
@@ -21,11 +21,52 @@
     $(document).ready(() => {
 
         $('.sidenav').sidenav();
+        $('.dropdown-trigger').dropdown();
 
         $('.bookmark-li').click( (event) => {
             event.preventDefault();
             const target = $(event.target);
             console.log(target.attr("value"));
+        });
+
+        $('.color-dropdown-select').click( (event) => {
+            const target = $(event.target);
+            var newColor, targetEntityID, apiURL;
+
+            if (target.prop("tagName") === "A") {
+                if (target.parent().parent().hasClass("collection-color-dropdown")) {
+                    apiURL = "/api/collections/color"
+                } else {
+                    apiURL = "/api/bookmarks/color"
+                }
+                targetEntityID = target.parent().parent().attr("data-id");
+                newColor = $(target.children()[0]).css("color");
+            } else if (target.prop("tagName") === "I") {
+                if (target.parent().parent().parent().hasClass("collection-color-dropdown")) {
+                    apiURL = "/api/collections/color"
+                } else {
+                    apiURL = "/api/bookmarks/color"
+                }
+                targetEntityID = target.parent().parent().parent().attr("data-id");
+                newColor = target.css("color");
+            }
+
+            console.log(targetEntityID);
+            console.log(apiURL)
+
+            $.ajax({
+                url: apiURL,
+                type: "PUT",
+                data: {
+                    "ids": [targetEntityID],
+                    "newColor": newColor
+                },
+                processData: true
+            }).then( () => {
+                location.replace("/");
+            }).fail( (err) => {
+                alert(err.responseText)
+            });
         });
 
 
