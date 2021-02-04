@@ -13,13 +13,18 @@
 
         {{#if color}}
         <a href="#" class="dropdown-trigger" data-target="collection-color-dropdown-{{id}}">
+            {{#if (isWhite color)}}
+            <i class="material-icons right" 
+                style="margin-right: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
+            {{else}}
             <i class="material-icons right" style="margin-right: 0; color: {{color}}">circle</i>
+            {{/if}}
         </a>
         <ul id="collection-color-dropdown-{{id}}" 
             class="dropdown-content collection-color-dropdown" data-id="{{id}}">
             <li><a href="#!" class="color-dropdown-select">
                 <i class="material-icons right" 
-                    style="margin-right: 0; color: white">circle</i>
+                    style="margin-right: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
             </a></li>
             <li><a href="#!" class="color-dropdown-select">
                 <i class="material-icons right" 

@@ -51,10 +51,14 @@
                 }
                 targetEntityID = targetLink.attr("data-id");
                 newColor = $(target.children()[0]).css("color");
+                if (newColor === "rgb(56, 56, 56)") {
+                    newColor = "rgb(255, 255, 255)";
+                }
 
             } else if (target.prop("tagName") === "I") {
 
                 targetLink = target.parent().parent().parent();
+                console.log(targetLink.attr("class"));
 
                 if (targetLink.hasClass("collection-color-dropdown")) {
                     apiURL = "/api/collections/color"
@@ -63,8 +67,12 @@
                 }
                 targetEntityID = targetLink.attr("data-id");
                 newColor = target.css("color");
-
+                if (newColor === "rgb(56, 56, 56)") {
+                    newColor = "rgb(255, 255, 255)";
+                }
             }
+
+            console.log(apiURL);
 
             $.ajax({
                 url: apiURL,
@@ -75,7 +83,14 @@
                 },
                 processData: true
             }).then( () => {
-                $(targetLink.prev().children()[0]).css("color", newColor);
+                if (newColor === "rgb(255, 255, 255)") {
+                    newColor = "rgb(56, 56, 56)";
+                    $(targetLink.prev().children()[0]).text("panorama_fish_eye");
+                    $(targetLink.prev().children()[0]).css("color", newColor);
+                } else {
+                    $(targetLink.prev().children()[0]).text("circle");
+                    $(targetLink.prev().children()[0]).css("color", newColor);
+                }
             }).fail( (err) => {
                 alert(err.responseText)
             });
