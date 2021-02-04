@@ -5,8 +5,19 @@
             folder
         </button>
         <a href="/" class="brand-logo">webM8</a>
-        <span id="username-display" class="right">{{username}}</span>
-        <button class="btn right" id="sign-out-btn">Sign out</button>
+        <div id="user-display">
+            <div class="row valign-wrapper" style="line-height: normal;">
+                <div class="col" >
+                    <span id="username-display" class="right">Signed in as: {{username}}</span>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col right">
+                    <button class="btn right" id="sign-out-btn">Sign out</button>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
 

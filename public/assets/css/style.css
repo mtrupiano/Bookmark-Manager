@@ -36,6 +36,25 @@ button.sidenav-trigger {
   width: 85%;
 }
 
+#user-display {
+  position: absolute;
+  right: 0;
+}
+
+#user-display>div.row {
+  margin-bottom: 0;
+}
+
+#username-display {
+  color: rgb(223, 219, 219, 0.6);
+}
+
+#sign-out-btn {
+  margin-top: 5px;
+  height: 30px;
+  line-height: 1;
+}
+
 
 @media only screen and (max-width: 992.8px) {
   button.sidenav-trigger {
