@@ -51,8 +51,13 @@ router.get("/readsessions", (request, response) => {
 
 // Log-out, end session and send to home route
 router.get('/logout', (request, response) => {
-    request.session.destroy();
-    response.redirect('/')
+    request.session.destroy( (err) => {
+        if (err) {
+            return next(err);
+        }
+    });
+
+    response.json(true);
 });
 
 

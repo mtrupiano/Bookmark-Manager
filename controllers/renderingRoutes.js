@@ -10,14 +10,4 @@ router.get("/splash", function(request, response) {
     }
 });
 
-// router.get("/home", (req, res) => {
-//     // Check if logged in
-//     if (!req.session.user) {
-//         res.render("splash");
-//         return;
-//     }
-
-//     res.render("/");
-// })
-
 module.exports = router;

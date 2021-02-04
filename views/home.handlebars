@@ -1,4 +1,15 @@
 
+<nav>
+    <div class="nav-wrapper valign-wrapper">
+        <button class="material-icons btn sidenav-trigger" data-target="main-menu">
+            folder
+        </button>
+        <a href="/" class="brand-logo">webM8</a>
+        <span id="username-display" class="right">{{username}}</span>
+        <button class="btn right" id="sign-out-btn">Sign out</button>
+    </div>
+</nav>
+
 <ul class="sidenav sidenav-fixed" id="main-menu">
     <li>
         <ul class="collapsible expandable"> 
@@ -23,6 +34,18 @@
 
         $('.sidenav').sidenav();
         $('.dropdown-trigger').dropdown();
+
+        $('#sign-out-btn').click( (event) => {
+            event.preventDefault();
+            $.ajax({
+                url: "/logout",
+                type: "GET"
+            }).then( () => {
+                location.replace('/splash')
+            }).fail( (err) => {
+                console.log(err);
+            });
+        });
 
         $('.bookmark-li').click( (event) => {
             event.preventDefault();
@@ -104,11 +127,6 @@
             console.log("Hello");
         });
 
-
-
-
     });
-
-
 
 </script>

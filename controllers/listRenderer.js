@@ -57,7 +57,15 @@ router.get("/", async function(request, response) {
             })).map(bookmark => bookmark.dataValues);
     }
 
+    const username = await db.User.findOne({
+        where: {
+            id: request.session.user.id
+        },
+        attributes: ['username']
+    });
+
     returnObj.collections = topLevelCollections;
+    returnObj.username = username.dataValues.username;
 
     response.render("home", returnObj);
 });
