@@ -1,67 +1,33 @@
+<a href="#" id="flex-test">
+    <i class="material-icons">folder</i>
+    Hello
+    <div>Test link</div>
+    <i class="material-icons">circle</i>
+</a>
+
 <li>
     <a value="{{id}}" class="collapsible-header">
         <i class="material-icons">folder</i>
         {{name}}
 
-        <a href="#" class="dropdown-trigger add-to-collection-btn" data-target="add-to-collection">
+        <div class="dropdown-trigger add-to-collection-btn" data-target="add-to-collection">
             <i class="material-icons">add</i>
-        </a>
+        </div>
         <ul id="add-to-collection" class="dropdown-content">
-            <li><a id="new-collection" data-id="{{id}}" href="#">New Collection</a></li>
-            <li><a id="new-bookmark" data-id="{{id}}" href="#">New Bookmark</a></li>
+            <li><div id="new-collection" data-id="{{id}}" href="#">New Collection</div></li>
+            <li><div id="new-bookmark" data-id="{{id}}" href="#">New Bookmark</div></li>
         </ul>
 
         {{#if color}}
-        <a href="#" class="dropdown-trigger" data-target="collection-color-dropdown-{{id}}">
+        <div class="color-dropdown-trigger" data-id={{id}}>
             {{#if (isWhite color)}}
-            <i class="material-icons right" 
+            <i class="material-icons" 
                 style="margin-right: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
             {{else}}
             <i class="material-icons right" style="margin-right: 0; color: {{color}}">circle</i>
             {{/if}}
-        </a>
-        <ul id="collection-color-dropdown-{{id}}" 
-            class="dropdown-content collection-color-dropdown" data-id="{{id}}">
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: black">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: red">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: green">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: blue">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: yellow">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: orange">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: purple">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: pink">circle</i>
-            </a></li>
-        </ul>
+        </div>
         {{/if}}
-
-    </a>
 
     <div class="collapsible-body">
         <ul class="collapsible expandable">
@@ -84,5 +50,54 @@
             {{/unless}}
         </ul>
     </div>
-    
+    </a>
 </li>
+
+<ul id="collection-color-dropdown-{{id}}" 
+    class="collection-color-dropdown" style="" data-id="{{id}}">
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
+        </div>
+    </li>
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: black">circle</i>
+        </div>
+    </li>
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: red">circle</i>
+        </div>
+    </li>
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: green">circle</i>
+        </div>
+    </li>
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: blue">circle</i>
+        </div>
+    </li>
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: yellow">circle</i>
+        </div>
+    </li>
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: orange">circle</i>
+        </div>
+    </li>
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: purple">circle</i>
+        </div>
+    </li>
+    <li>
+        <div class="collection-color-dropdown-select">
+            <i class="material-icons" style="margin-right: 0; color: pink">circle</i>
+        </div>
+    </li>
+</ul>

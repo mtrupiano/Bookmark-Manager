@@ -1,38 +1,37 @@
 
 <nav>
     <div class="nav-wrapper valign-wrapper">
-        <button class="material-icons btn sidenav-trigger" data-target="main-menu">
-            folder
-        </button>
+        
         <a href="/" class="brand-logo">webM8</a>
+
         <div id="user-display">
+
             <div class="row valign-wrapper" style="line-height: normal;">
                 <div class="col" >
-                    <span id="username-display" class="right">Signed in as: {{username}}</span>
+                    <span id="username-display" class="right">
+                        Signed in as: {{username}}
+                    </span>
                 </div>
-
             </div>
+
             <div class="row">
                 <div class="col right">
                     <button class="btn right" id="sign-out-btn">Sign out</button>
                 </div>
             </div>
+
         </div>
     </div>
 </nav>
 
-<ul class="sidenav sidenav-fixed" id="main-menu">
-    <li>
-        <ul class="collapsible expandable"> 
-            {{#each collections}}
-                {{> collectionPartial}}
-            {{/each}}
-            {{#each bookmarks}}
-                {{> bookmarkPartial}}
-            {{/each}}
-        </ul>
-    </li>
-</ul>
+<div class="container">
+    <ul class="collapsible expandable"> 
+        {{#each collections}}
+            {{> collectionPartial}}
+        {{/each}}
+
+    </ul>
+</div>
 
 <script type="text/javascript" src="https://chir.ag/projects/ntc/ntc.js"></script>
 <script>
@@ -70,20 +69,32 @@
             console.log(id);
         });
 
-        $('.color-dropdown-select').click( (event) => {
+        $('.color-dropdown-trigger').click( (event) => {
+            event.stopPropagation();
+
+
+            $('.collection-color-dropdown').css(`top`, event.pageY - event.offsetY + 28);
+            $('.collection-color-dropdown').css(`left`, event.pageX - event.offsetX + 1);
+            $('.collection-color-dropdown').css("visibility", "visible");
+            $('.collection-color-dropdown').css("opacity", "1");
+        });
+
+
+        $('.collection-color-dropdown-select').click( (event) => {
+            event.stopPropagation();
+            $('.collection-color-dropdown').css("opacity", "0");
+            $('.collection-color-dropdown').css("visibility", "hidden");
+
+
             const target = $(event.target);
-            var newColor, targetEntityID, apiURL, targetLink;
+            var newColor, targetEntityID, targetLink;
+            const apiURL = "/api/collections/color";
 
             if (target.prop("tagName") === "A") {
 
                 targetLink = target.parent().parent();
-
-                if (targetLink.hasClass("collection-color-dropdown")) {
-                    apiURL = "/api/collections/color"
-                } else {
-                    apiURL = "/api/bookmarks/color"
-                }
                 targetEntityID = targetLink.attr("data-id");
+
                 newColor = $(target.children()[0]).css("color");
                 if (newColor === "rgb(56, 56, 56)") {
                     newColor = "rgb(255, 255, 255)";
@@ -92,14 +103,8 @@
             } else if (target.prop("tagName") === "I") {
 
                 targetLink = target.parent().parent().parent();
-                console.log(targetLink.attr("class"));
-
-                if (targetLink.hasClass("collection-color-dropdown")) {
-                    apiURL = "/api/collections/color"
-                } else {
-                    apiURL = "/api/bookmarks/color"
-                }
                 targetEntityID = targetLink.attr("data-id");
+
                 newColor = target.css("color");
                 if (newColor === "rgb(56, 56, 56)") {
                     newColor = "rgb(255, 255, 255)";
@@ -117,13 +122,15 @@
                 },
                 processData: true
             }).then( () => {
+                const targetEntity = 
+                    $(`.color-dropdown-trigger[data-id=${targetEntityID}]`);
+
                 if (newColor === "rgb(255, 255, 255)") {
-                    newColor = "rgb(56, 56, 56)";
-                    $(targetLink.prev().children()[0]).text("panorama_fish_eye");
-                    $(targetLink.prev().children()[0]).css("color", newColor);
+                    $(targetEntity.children()[0]).text("panorama_fish_eye");
+                    $(targetEntity.children()[0]).css("color", "rgb(56, 56, 56)");
                 } else {
-                    $(targetLink.prev().children()[0]).text("circle");
-                    $(targetLink.prev().children()[0]).css("color", newColor);
+                    $(targetEntity.children()[0]).text("circle");
+                    $(targetEntity.children()[0]).css("color", newColor);
                 }
             }).fail( (err) => {
                 alert(err.responseText)

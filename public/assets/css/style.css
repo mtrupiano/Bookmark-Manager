@@ -17,25 +17,6 @@ body {
   
 }
 
-button.sidenav-trigger {
-  display: none;
-  height: 35px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.sidenav {
-  top: auto;
-}
-
-.sidenav .collapsible-body li > .collapsible-body {
-  padding-left: 5%;
-}
-
-.sidenav li {
-  width: 85%;
-}
-
 #user-display {
   position: absolute;
   right: 0;
@@ -55,6 +36,21 @@ button.sidenav-trigger {
   line-height: 1;
 }
 
+ul.collection-color-dropdown, 
+ul.bookmark-color-dropdown {
+  position: fixed;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s, opacity 0.4s linear;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px solid;
+  border-color: rgb(117, 117, 117, 0.5);
+  border-radius: 14px;
+}
+
+.collection-color-dropdown-select>i {
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 992.8px) {
   button.sidenav-trigger {
