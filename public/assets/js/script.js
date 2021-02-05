@@ -1,3 +1,8 @@
+document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, { "accordion": false });
+});
+
 $(document).ready( () => {
 
     // Initialize Materialize tabs
@@ -28,6 +33,116 @@ $(document).ready( () => {
         }).then(() => {
             location.replace("/");
         }).fail(err => alert(err.responseText));
+    });
+
+    $('.sidenav').sidenav();
+    $('.dropdown-trigger').dropdown({    });
+
+    $('#sign-out-btn').click((event) => {
+        event.preventDefault();
+        $.ajax({
+            url: "/logout",
+            type: "GET"
+        }).then(() => {
+            location.replace('/splash')
+        }).fail((err) => {
+            console.log(err);
+        });
+    });
+
+    $('.bookmark-li').click((event) => {
+        event.preventDefault();
+        const target = $(event.target);
+        let id;
+        if (target.prop("tagName") === "I") {
+            id = target.parent().attr("value");
+        } else {
+            id = target.attr("value");
+        }
+        console.log(id);
+    });
+
+    $('.dropdown-content').click( (event) => {
+        event.stopPropagation();
+    })
+
+    $('.new-entity-dropdown-trigger').click((event) => {
+        event.stopPropagation();
+    });
+
+    $('.new-collection').click((event) => {
+        event.stopPropagation();
+        const targetCollectionID = $(event.target).attr('data-id');
+        console.log("New sub-collection in collection " + targetCollectionID);
+    });
+
+    $('.new-bookmark').click((event) => {
+        event.stopPropagation();
+        const targetCollectionID = $(event.target).attr('data-id');
+        console.log("New bookmark in collection " + targetCollectionID);
+    });
+
+    $('.color-dropdown-trigger').click((event) => {
+        event.stopPropagation();
+    });
+
+    // Hide color picker if user clicks anywhere else in the window
+    $(window).click((event) => {
+        $('.dropdown-trigger').dropdown('close');
+    });
+
+    $('.collection-color-dropdown-select').click((event) => {
+        event.stopPropagation();
+
+        const target = $(event.target);
+        var newColor, targetEntityID, targetLink;
+        const apiURL = "/api/collections/color";
+
+        if (target.prop("tagName") === "A") {
+
+            targetLink = target.parent().parent();
+            targetEntityID = targetLink.attr("data-id");
+
+            newColor = $(target.children()[0]).css("color");
+            if (newColor === "rgb(56, 56, 56)") {
+                newColor = "rgb(255, 255, 255)";
+            }
+
+        } else if (target.prop("tagName") === "I") {
+
+            targetLink = target.parent().parent().parent();
+            targetEntityID = targetLink.attr("data-id");
+
+            newColor = target.css("color");
+            if (newColor === "rgb(56, 56, 56)") {
+                newColor = "rgb(255, 255, 255)";
+            }
+        }
+
+        console.log(apiURL);
+
+        $.ajax({
+            url: apiURL,
+            type: "PUT",
+            data: {
+                "ids": [targetEntityID],
+                "newColor": newColor
+            },
+            processData: true
+        }).then(() => {
+            const targetEntity =
+                $(`.color-dropdown-trigger[data-id=${targetEntityID}]`);
+
+            if (newColor === "rgb(255, 255, 255)") {
+                $(targetEntity.children()[0]).text("panorama_fish_eye");
+                $(targetEntity.children()[0]).css("color", "rgb(56, 56, 56)");
+            } else {
+                $(targetEntity.children()[0]).text("circle");
+                $(targetEntity.children()[0]).css("color", newColor);
+            }
+        }).fail((err) => {
+            alert(err.responseText)
+        });
     });
 
 });
