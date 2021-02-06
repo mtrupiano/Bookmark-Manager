@@ -79,11 +79,6 @@ ul.color-dropdown {
   min-width: 34px;
 }
 
-/* .dropdown-content {
-  border: 2px solid;
-  border-color: rgb(117, 117, 117, 0.5);
-} */
-
 .add-entity-trigger, 
 .color-dropdown-trigger-collection, 
 .color-dropdown-trigger-bookmark {
@@ -112,6 +107,29 @@ ul.color-dropdown {
   justify-content: center;
   text-align: center;
   min-height: 30px;
+}
+
+.bookmark-btn {
+  background-color: rgb(9, 165, 9);
+}
+
+.bookmark-btn:hover, .bookmark-btn:active, .bookmark-btn:visited, .bookmark-btn:focus {
+  background-color: rgb(5, 117, 5);
+}
+
+.bookmark-delete-btn, .collection-delete-btn {
+  background-color: rgb(223, 19, 19);
+}
+
+.bookmark-delete-btn:hover, 
+.bookmark-delete-btn:active, 
+.bookmark-delete-btn:visited, 
+.bookmark-delete-btn:focus, 
+.collection-delete-btn:hover, 
+.collection-delete-btn:active, 
+.collection-delete-btn:visited, 
+.collection-delete-btn:focus {
+  background-color: rgb(167, 12, 12);
 }
 
 @media only screen and (max-width: 992.8px) {

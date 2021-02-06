@@ -87,6 +87,46 @@ $(document).ready( () => {
         $('.dropdown-trigger').dropdown('close');
     });
 
+    $('.bookmark-btn').click( (event) => {
+        event.preventDefault();
+        window.open($(event.target).attr("data-url"));
+    });
+
+    $('.bookmark-delete-btn').on('click', (event) => {
+        event.stopPropagation();
+        const id = $(event.target).attr("data-id");
+        $.ajax({
+            url: "/api/bookmarks/" + id,
+            method: "DELETE"
+        }).then( () => {
+
+        }).fail( (err) => {
+
+        });
+    });
+
+    $('.collection-delete-btn').on('click', (event) => {
+        event.stopPropagation();
+        const id = $(event.target).attr("data-id");
+        $.ajax({
+            url: "/api/collections/" + id,
+            method: "DELETE"
+        }).then(() => {
+            location.reload();
+        }).fail((err) => {
+            alert(err.responseText);
+        });
+    });
+    $('.bookmark-move-btn').on('click', (event) => {
+        event.stopPropagation();
+        const id = $(event.target).attr("data-id");
+    });
+    $('.collection-move-btn').on('click', (event) => {
+        event.stopPropagation();
+        const id = $(event.target).attr("data-id");
+
+    });
+
     $('.color-dropdown-select').click((event) => {
         event.stopPropagation();
 
