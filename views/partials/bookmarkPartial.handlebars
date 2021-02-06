@@ -1,63 +1,57 @@
 <li>
 
-    <a href="#" value="{{id}}">
-        <div>
+    <a href="#" value="{{id}}" class="valign-wrapper entity-entry">
 
-        <i class="material-icons">bookmark</i>
+        <i class="material-icons" style="padding-left: 2px; margin-right: 16px">bookmark</i>
         {{name}}
 
         {{#if color}}
-        <a href="#" class="display-flex dropdown-trigger" 
-            data-target="bookmark-color-dropdown-{{id}}">
+        <div class="right-align-buttons">
+            <div class="dropdown-trigger color-dropdown-trigger-bookmark valign-wrapper" 
+                data-target="bookmark-color-dropdown-{{id}}" data-id="{{id}}">
 
-            {{#if (isWhite color)}}
-            <i class="material-icons"
-                style="margin-right: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
-            {{else}}
-            <i class="material-icons" style="margin-right: 0; color: {{color}}">circle</i>
-            {{/if}}
-
-        </a>
-        <ul id="bookmark-color-dropdown-{{id}}" 
-            class="dropdown-content" data-id="{{id}}">
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
+                {{#if (isWhite color)}}
+                <i class="material-icons"
                     style="margin-right: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: black">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: red">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: green">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: blue">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: yellow">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: orange">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: purple">circle</i>
-            </a></li>
-            <li><a href="#!" class="color-dropdown-select">
-                <i class="material-icons right" 
-                    style="margin-right: 0; color: pink">circle</i>
-            </a></li>
-        </ul>
-    {{/if}}
+                {{else}}
+                <i class="material-icons" style="color: {{color}}">circle</i>
+                {{/if}}
+
+            </div>
+
+            <ul id="bookmark-color-dropdown-{{id}}" 
+                class="dropdown-content color-dropdown" data-id="{{id}}">
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: rgb(56, 56, 56)">panorama_fish_eye</i>
+                </div></li>
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: black">circle</i>
+                </div></li>
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: red">circle</i>
+                </div></li>
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: green">circle</i>
+                </div></li>
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: blue">circle</i>
+                </div></li>
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: yellow">circle</i>
+                </div></li>
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: orange">circle</i>
+                </div></li>
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: purple">circle</i>
+                </div></li>
+                <li><div class="color-dropdown-select">
+                    <i class="material-icons" style="color: pink">circle</i>
+                </div></li>
+            </ul>
         </div>
+        
+        {{/if}}
+
     </a>
 </li>

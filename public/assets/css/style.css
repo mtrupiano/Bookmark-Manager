@@ -36,12 +36,19 @@ body {
   line-height: 1;
 }
 
-a.collapsible-header {
+a.entity-entry {
+  display: flex;
+  cursor: pointer;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
   position: relative
 }
 
-ul.collection-color-dropdown, 
-ul.bookmark-color-dropdown {
+a.entity-entry>i {
+  margin-right: 14px;
+}
+
+ul.color-dropdown {
   border-radius: 14px;
   min-width: 34px;
 }
@@ -59,8 +66,12 @@ ul.bookmark-color-dropdown {
   right: 0;
 }
 
+.color-dropdown i {
+  margin-right: 0;
+}
 
 .dropdown-content>li {
+  justify-content: center;
   text-align: center;
   min-height: 30px;
 }

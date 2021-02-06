@@ -21,6 +21,7 @@
             </div>
 
         </div>
+        
     </div>
 </nav>
 
@@ -30,6 +31,9 @@
             {{> collectionPartial}}
         {{/each}}
 
+        {{#each bookmarks}}
+            {{> bookmarkPartial}}
+        {{/each}}
     </ul>
 </div>
 

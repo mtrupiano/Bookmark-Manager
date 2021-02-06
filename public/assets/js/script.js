@@ -66,7 +66,7 @@ $(document).ready( () => {
         event.stopPropagation();
     })
 
-    $('.new-entity-dropdown-trigger').click((event) => {
+    $('.dropdown-trigger').click((event) => {
         event.stopPropagation();
     });
 
@@ -82,26 +82,21 @@ $(document).ready( () => {
         console.log("New bookmark in collection " + targetCollectionID);
     });
 
-    $('.color-dropdown-trigger').click((event) => {
-        event.stopPropagation();
-    });
-
     // Hide color picker if user clicks anywhere else in the window
     $(window).click((event) => {
         $('.dropdown-trigger').dropdown('close');
     });
 
-    $('.collection-color-dropdown-select').click((event) => {
+    $('.color-dropdown-select').click((event) => {
         event.stopPropagation();
 
         const target = $(event.target);
-        var newColor, targetEntityID, targetLink;
-        const apiURL = "/api/collections/color";
+        let newColor, targetEntityID, targetDropdownList, apiURL, targetEntity;
 
         if (target.prop("tagName") === "A") {
 
-            targetLink = target.parent().parent();
-            targetEntityID = targetLink.attr("data-id");
+            targetDropdownList = target.parent().parent();
+            targetEntityID = targetDropdownList.attr("data-id");
 
             newColor = $(target.children()[0]).css("color");
             if (newColor === "rgb(56, 56, 56)") {
@@ -110,16 +105,22 @@ $(document).ready( () => {
 
         } else if (target.prop("tagName") === "I") {
 
-            targetLink = target.parent().parent().parent();
-            targetEntityID = targetLink.attr("data-id");
+            targetDropdownList = target.parent().parent().parent();
+            targetEntityID = targetDropdownList.attr("data-id");
 
             newColor = target.css("color");
             if (newColor === "rgb(56, 56, 56)") {
                 newColor = "rgb(255, 255, 255)";
             }
         }
-
-        console.log(apiURL);
+        
+        if (targetDropdownList.hasClass("color-dropdown-collection")) {
+            apiURL = "/api/collections/color";
+            targetEntity = $(`.color-dropdown-trigger-collection[data-id=${targetEntityID}]`)
+        } else {
+            apiURL = "/api/bookmarks/color";
+            targetEntity = $(`.color-dropdown-trigger-bookmark[data-id=${targetEntityID}]`)
+        }
 
         $.ajax({
             url: apiURL,
@@ -130,8 +131,6 @@ $(document).ready( () => {
             },
             processData: true
         }).then(() => {
-            const targetEntity =
-                $(`.color-dropdown-trigger[data-id=${targetEntityID}]`);
 
             if (newColor === "rgb(255, 255, 255)") {
                 $(targetEntity.children()[0]).text("panorama_fish_eye");
@@ -144,5 +143,6 @@ $(document).ready( () => {
             alert(err.responseText)
         });
     });
+
 
 });

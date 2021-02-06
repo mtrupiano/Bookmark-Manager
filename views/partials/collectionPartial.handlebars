@@ -1,10 +1,10 @@
 <li>
-    <a value="{{id}}" class="collapsible-header valign-wrapper">
+    <a value="{{id}}" class="collapsible-header entity-entry valign-wrapper">
         <i class="material-icons">folder</i>
         {{name}}
 
-        <div class="right-align-buttons" style="align-self: right;">
-        <div class="dropdown-trigger new-entity-dropdown-trigger valign-wrapper" 
+    <div class="right-align-buttons">
+        <div class="dropdown-trigger valign-wrapper" 
             data-target="add-to-collection-{{id}}">
             <i class="material-icons" style="margin: 0; color: grey">add</i>
         </div>
@@ -14,7 +14,8 @@
         </ul>
 
         {{#if color}}
-        <div class="dropdown-trigger color-dropdown-trigger valign-wrapper" data-id={{id}} 
+
+        <div class="dropdown-trigger color-dropdown-trigger-collection valign-wrapper" data-id={{id}} 
             data-target="collection-color-dropdown-{{id}}" style="margin: 0;">
             {{#if (isWhite color)}}
             <i class="material-icons" 
@@ -23,55 +24,58 @@
             <i class="material-icons" style="margin: 0; color: {{color}}">circle</i>
             {{/if}}
         </div>
-        <ul id="collection-color-dropdown-{{id}}" class="dropdown-content collection-color-dropdown" data-id="{{id}}">
+
+        <ul id="collection-color-dropdown-{{id}}" 
+           class="dropdown-content color-dropdown color-dropdown-collection" data-id="{{id}}">
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: rgb(56, 56, 56)">panorama_fish_eye</i>
                 </div>
             </li>
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: black">circle</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: black">circle</i>
                 </div>
             </li>
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: red">circle</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: red">circle</i>
                 </div>
             </li>
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: green">circle</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: green">circle</i>
                 </div>
             </li>
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: blue">circle</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: blue">circle</i>
                 </div>
             </li>
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: yellow">circle</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: yellow">circle</i>
                 </div>
             </li>
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: orange">circle</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: orange">circle</i>
                 </div>
             </li>
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: purple">circle</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: purple">circle</i>
                 </div>
             </li>
             <li class="valign-wrapper">
-                <div class="collection-color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="margin-right: 0; color: pink">circle</i>
+                <div class="color-dropdown-select valign-wrapper">
+                    <i class="material-icons" style="color: pink">circle</i>
                 </div>
             </li>
         </ul>
+
         {{/if}}
-        </div>
+    </div>
 
     <div class="collapsible-body">
         <ul class="collapsible expandable">
