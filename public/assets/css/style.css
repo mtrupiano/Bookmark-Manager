@@ -7,14 +7,39 @@ body {
   font-family: 'Maven Pro', sans-serif;
 }
 
-.collapsible-body ul li a.nothing-here {
-  color: gray;
-  text-align: center;
+a {
+  font-size: 16px
 }
+
+.collapsible {
+  border-radius: 5px;
+  margin: 0.5rem 0 0.5rem 0;
+}
+.collapsible-body {
+  border-radius: 5px;
+  padding: 0 0.5rem 0 0.5rem
+}
+.collapsible-header {
+  border-radius: 5px;
+}
+
 
 .collapsible-body ul li a.nothing-here:hover {
   background-color:  #fff;
-  
+}
+
+.nothing-here-body {
+  border-radius: 5px;
+  margin: 0.5rem;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+div.nothing-here {
+  color: gray;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 16px;
+  margin-bottom: 0.5rem;
 }
 
 #user-display {
@@ -41,29 +66,42 @@ a.entity-entry {
   cursor: pointer;
   padding: 1rem;
   border-bottom: 1px solid #ddd;
-  position: relative
+  position: relative;
 }
 
 a.entity-entry>i {
   margin-right: 14px;
-}
+  width: 2rem
+} 
 
 ul.color-dropdown {
   border-radius: 14px;
   min-width: 34px;
 }
 
-.dropdown-content {
+/* .dropdown-content {
   border: 2px solid;
   border-color: rgb(117, 117, 117, 0.5);
+} */
+
+.add-entity-trigger, 
+.color-dropdown-trigger-collection, 
+.color-dropdown-trigger-bookmark {
+  display: flex;
+  position: absolute;
 }
 
-.right-align-buttons {
-  display: flex;
-  justify-content: space-around;
-  width: 150px;
-  position: absolute;
-  right: 0;
+.add-entity-trigger {
+  right: 100px;
+}
+
+.add-entity-dropdown {
+  border-radius: 5px;
+}
+
+.color-dropdown-trigger-collection, 
+.color-dropdown-trigger-bookmark {
+  right: 50px
 }
 
 .color-dropdown i {

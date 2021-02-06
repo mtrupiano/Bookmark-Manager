@@ -3,20 +3,21 @@
         <i class="material-icons">folder</i>
         {{name}}
 
-    <div class="right-align-buttons">
-        <div class="dropdown-trigger valign-wrapper" 
+
+        <div class="dropdown-trigger add-entity-trigger valign-wrapper" 
             data-target="add-to-collection-{{id}}">
             <i class="material-icons" style="margin: 0; color: grey">add</i>
         </div>
-        <ul id="add-to-collection-{{id}}" class="dropdown-content">
+        <ul id="add-to-collection-{{id}}" class="dropdown-content add-entity-dropdown">
             <li><div class="new-collection" data-id="{{id}}">New Collection</div></li>
+            <li class="divider" tabindex="-1"></li>
             <li><div class="new-bookmark"   data-id="{{id}}">New Bookmark  </div></li>
         </ul>
 
         {{#if color}}
 
         <div class="dropdown-trigger color-dropdown-trigger-collection valign-wrapper" data-id={{id}} 
-            data-target="collection-color-dropdown-{{id}}" style="margin: 0;">
+            data-target="collection-color-dropdown-{{id}}">
             {{#if (isWhite color)}}
             <i class="material-icons" 
                 style="margin: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
@@ -29,7 +30,8 @@
            class="dropdown-content color-dropdown color-dropdown-collection" data-id="{{id}}">
             <li class="valign-wrapper">
                 <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: rgb(56, 56, 56)">panorama_fish_eye</i>
+                    <i class="material-icons" 
+                        style="color: rgb(56, 56, 56)">panorama_fish_eye</i>
                 </div>
             </li>
             <li class="valign-wrapper">
@@ -75,29 +77,30 @@
         </ul>
 
         {{/if}}
-    </div>
 
-    <div class="collapsible-body">
-        <ul class="collapsible expandable">
-            {{#if collections}}
-            {{#each collections}}
-                {{> collectionPartial}}
-            {{/each}}
-            {{/if}}
-            {{#if bookmarks}}
-            {{#each bookmarks}}
-                {{> bookmarkPartial}}
-            {{/each}}
-            {{/if}}
-            {{#unless bookmarks}}
-            {{#unless collections}}
-                <li>
-                    <a class="nothing-here" href="#">Nothing here!</a>
-                </li>
-            {{/unless}}
-            {{/unless}}
-        </ul>
-    </div>
+
     </a>
+    {{#if collections}}
+        <div class="collapsible-body">
+            <ul class="collapsible expandable">
+                {{#if collections}}
+                {{#each collections}}
+                    {{> collectionPartial}}
+                {{/each}}
+
+
+                {{/if}}
+            </ul>
+        </div>
+    {{/if}}
+
+    {{#unless collections}}
+        <div class="collapsible-body ">
+        <div class="nothing-here-body">
+            <div class="nothing-here">Nothing here!</div>
+        </div>
+
+        </div>
+    {{/unless}}
 </li>
 
