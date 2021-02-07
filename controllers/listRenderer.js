@@ -5,7 +5,7 @@ const db        = require('../models');
 const { Op } = require('sequelize');
 const { QueryTypes } = require('sequelize');
 
-router.get("/", async function(request, response) {
+router.get("/home", async function(request, response) {
 
     // Check if logged in
     if (!request.session.user) {

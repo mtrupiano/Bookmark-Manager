@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-router.get("/splash", function(request, response) {
+router.get("/", function(request, response) {
     // Check if logged in
     if (!request.session.user) {
         response.render("splash");
     } else {
-        response.redirect("/");
+        response.redirect("/home");
     }
 });
 
