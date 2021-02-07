@@ -1,0 +1,39 @@
+
+<nav>
+    <div class="nav-wrapper valign-wrapper">
+        
+        <a href="/" class="brand-logo">webM8</a>
+
+        <div id="user-display">
+
+            <div class="row valign-wrapper" style="line-height: normal;">
+                <div class="col" >
+                    <span id="username-display" class="right">
+                        Signed in as: {{username}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col right">
+                    <button class="btn right" id="sign-out-btn">Sign out</button>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</nav>
+
+<div class="container">
+    <ul class="collapsible expandable"> 
+        {{#each collections}}
+            {{> collectionPartial}}
+        {{/each}}
+
+        {{#each bookmarks}}
+            {{> bookmarkPartial}}
+        {{/each}}
+    </ul>
+</div>
+
