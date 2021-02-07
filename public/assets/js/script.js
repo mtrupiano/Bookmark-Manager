@@ -13,7 +13,7 @@ $(document).ready( () => {
 
         const username = $('#login-username-input').val().trim();
         const password = $('#login-password-input').val();
-        console.log(password);
+
         $.post("/login", {
             username,
             password
