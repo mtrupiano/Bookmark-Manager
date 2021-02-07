@@ -22,7 +22,7 @@ $(document).ready( () => {
         }).fail(err => alert(err.responseText));
     });
 
-    $('#signup-btn').click((event) => {
+    $('#signup-btn').on('click', (event) => {
         event.preventDefault();
 
         const username = $('#signup-username-input').val().trim();
@@ -38,7 +38,7 @@ $(document).ready( () => {
     $('.sidenav').sidenav();
     $('.dropdown-trigger').dropdown({    });
 
-    $('#sign-out-btn').click((event) => {
+    $('#sign-out-btn').on('click', (event) => {
         event.preventDefault();
         $.ajax({
             url: "/logout",
@@ -50,7 +50,7 @@ $(document).ready( () => {
         });
     });
 
-    $('.bookmark-li').click((event) => {
+    $('.bookmark-li').on('click', (event) => {
         event.preventDefault();
         const target = $(event.target);
         let id;
@@ -62,21 +62,21 @@ $(document).ready( () => {
         console.log(id);
     });
 
-    $('.dropdown-content').click( (event) => {
+    $('.dropdown-content').on('click', (event) => {
         event.stopPropagation();
     })
 
-    $('.dropdown-trigger').click((event) => {
+    $('.dropdown-trigger').on('click', (event) => {
         event.stopPropagation();
     });
 
-    $('.new-collection').click((event) => {
+    $('.new-collection').on('click', (event) => {
         event.stopPropagation();
         const targetCollectionID = $(event.target).attr('data-id');
         console.log("New sub-collection in collection " + targetCollectionID);
     });
 
-    $('.new-bookmark').click((event) => {
+    $('.new-bookmark').on('click',(event) => {
         event.stopPropagation();
         const targetCollectionID = $(event.target).attr('data-id');
         console.log("New bookmark in collection " + targetCollectionID);
@@ -87,7 +87,7 @@ $(document).ready( () => {
         $('.dropdown-trigger').dropdown('close');
     });
 
-    $('.bookmark-btn').click( (event) => {
+    $('.bookmark-btn').on('click', (event) => {
         event.preventDefault();
         window.open($(event.target).attr("data-url"));
     });
@@ -127,7 +127,7 @@ $(document).ready( () => {
 
     });
 
-    $('.color-dropdown-select').click((event) => {
+    $('.color-dropdown-select').on('click', (event) => {
         event.stopPropagation();
 
         const target = $(event.target);
