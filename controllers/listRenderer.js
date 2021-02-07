@@ -68,7 +68,6 @@ router.get("/home", async function(request, response) {
     returnObj.collections = topLevelCollections;
     returnObj.username = username.dataValues.username;
     response.render("home", returnObj);
-    response.json(returnObj);
 });
 
 // Recursive function to retrieve all subcollections in every collection
