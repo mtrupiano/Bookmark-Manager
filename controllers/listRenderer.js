@@ -18,6 +18,7 @@ router.get("/home", async function(request, response) {
     const uncategorizedBookmarks = (await db.sequelize.query(
         'SELECT `id`, `name`, `url`, `color` FROM Bookmarks ' +
         'LEFT JOIN bookmark_collections ON bookmark_collections.BookmarkId = Bookmarks.id ' +
+        'LEFT JOIN bookmark_tags ON bookmark_tags.BookmarkId = Bookmarks.id' +
         'WHERE bookmark_collections.BookmarkId IS NULL ' +
         'AND Bookmarks.UserId = ' + request.session.user.id, { type: QueryTypes.SELECT }));
 
@@ -66,8 +67,8 @@ router.get("/home", async function(request, response) {
 
     returnObj.collections = topLevelCollections;
     returnObj.username = username.dataValues.username;
-
     response.render("home", returnObj);
+    response.json(returnObj);
 });
 
 // Recursive function to retrieve all subcollections in every collection

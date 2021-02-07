@@ -34,7 +34,7 @@ app.set("view engine", "handlebars");
 var hbs = exphbs.create({});
 hbs.handlebars.registerHelper('isWhite', function(color) {
     return color === "rgb(255, 255, 255)";
-})
+});
 
 // Controllers
 const userController = require('./controllers/userController');

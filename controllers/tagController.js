@@ -37,7 +37,7 @@ router.get("/bookmark", function (request, response) {
         include: [{
             model: db.Bookmark,
             where: {
-                id: request.query.bookmark
+                id: request.body.bookmark
             },
             through: {
                 attributes: [] 
@@ -67,16 +67,16 @@ router.post("/", function (request, response) {
             where: {
                 id: request.body.tag
             }
-        }).then( (checkResult) => {
-            if (checkResult.hasBookmark(request.body.bookmark)) {
-                response.json("Already linked.");
+        }).then( async (checkResult) => {
+            const findBookmark = 
+                await checkResult.hasBookmark(parseInt(request.body.bookmark));
+
+            if ( findBookmark ) {
+                response.json("Already linked");
             } else {
-                checkResult.addBookmark(request.body.bookmark);
-                response.json({
-                    linkSuccessful: true,
-                    tag: checkResult.dataValues.id,
-                    bookmark: request.body.bookmark
-                });
+                response.json(
+                    await checkResult.addBookmark(parseInt(request.body.bookmark))
+                );
             }
         }).catch( (err) => {
             response.status(500).json(err);
@@ -89,18 +89,18 @@ router.post("/", function (request, response) {
             where: {
                 name: request.body.name
             }
-        }).then( (checkResult) => {
+        }).then( async (checkResult) => {
             // If tag with specified name already exists, link it to specified bookmark
             if (checkResult) {
-                if (checkResult.hasBookmark(request.body.bookmark)) {
-                    response.json("Already linked.");
+                const findBookmark =
+                    await checkResult.hasBookmark(parseInt(request.body.bookmark));
+
+                if (findBookmark) {
+                    response.json("Already linked");
                 } else {
-                    checkResult.addBookmark(request.body.bookmark);
-                    response.json({
-                        linkSuccessful: true,
-                        tag: checkResult.dataValues.id,
-                        bookmark: request.body.bookmark
-                    });
+                    response.json(
+                        await checkResult.addBookmark(parseInt(request.body.bookmark))
+                    );
                 }
             } 
             // Else, create a new tag or link
@@ -108,13 +108,10 @@ router.post("/", function (request, response) {
                 db.Tag.create({
                     name: request.body.name,
                     UserId: request.session.user.id
-                }).then(function (createResult) {
-                    createResult.addBookmark(request.body.bookmark);
-                    response.json({
-                        linkSuccessful: true,
-                        tag: createResult.dataValues.id,
-                        bookmark: request.body.bookmark
-                    });
+                }).then(async (createResult) => {
+                    response.json(
+                        await createResult.addBookmark(request.body.bookmark)
+                    );
                 }).catch((err) => {
                     response.status(500).json(err);
                 });
@@ -180,14 +177,14 @@ router.delete("/:tag/:bookmark", function (request, response) {
         where: {
             id: request.params.tag
         }
-    }).then( (result) => {
-        if (result.hasBookmark(request.params.bookmark)) {
-            result.removeBookmark(request.params.bookmark);
-            response.json({
-                removedLink: true,
-                tag: request.params.tag,
-                bookmark: request.params.bookmark
-            });
+    }).then( async (result) => {
+        const findBookmark = await result.hasBookmark(parseInt(request.params.bookmark));
+        if (findBookmark) {
+            response.json(
+                await result.removeBookmark(parseInt(request.params.bookmark))
+            );
+        } else {
+            response.json("Those were not linked");
         }
     }).catch((err) => {
         response.status(500).json(err);
