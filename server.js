@@ -24,8 +24,6 @@ app.use(session({
 }))
 
 app.use(express.static(__dirname + "/public"));
-app.use("/assets/materialize", express.static(__dirname + "/node_modules/materialize-css/dist"));
-app.use("/assets/jquery", express.static(__dirname + "/node_modules/jquery/dist"));
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
@@ -35,7 +33,7 @@ app.set("view engine", "handlebars");
 
 var hbs = exphbs.create({});
 hbs.handlebars.registerHelper('isWhite', function(color) {
-    return color === "rgb(255, 255, 255)"
+    return color === "rgb(255, 255, 255)";
 })
 
 // Controllers
@@ -54,8 +52,6 @@ app.use('/api/tags', tagController);
 app.use(require('./controllers/listRenderer'));
 app.use(require('./controllers/modalRenderer'));
 app.use(require('./controllers/renderingRoutes'));
-
-require('./routes/api-routes')(app);
 
 db.sequelize.sync({ force: process.env.FORCE_SYNC }).then(function () {
     app.listen(PORT, function () {
