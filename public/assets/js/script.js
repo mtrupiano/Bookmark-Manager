@@ -18,7 +18,7 @@ $(document).ready( () => {
             username,
             password
         }).then(() => {
-            location.replace("/");
+            location.replace("/home");
         }).fail(err => alert(err.responseText));
     });
 
@@ -44,7 +44,7 @@ $(document).ready( () => {
             url: "/logout",
             type: "GET"
         }).then(() => {
-            location.replace('/splash')
+            location.replace('/')
         }).fail((err) => {
             console.log(err);
         });

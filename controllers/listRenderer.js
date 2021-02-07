@@ -9,7 +9,7 @@ router.get("/home", async function(request, response) {
 
     // Check if logged in
     if (!request.session.user) {
-        response.status(401).redirect("/splash");
+        response.status(401).redirect("/");
         return;
     }
     
