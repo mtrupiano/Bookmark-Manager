@@ -16,13 +16,18 @@ router.get("/home", async function(request, response) {
     const returnObj = {};
 
     const uncategorizedBookmarks = (await db.sequelize.query(
-        'SELECT `id`, `name`, `url`, `color`, `Tags.name` FROM Bookmarks ' +
+        'SELECT Bookmarks.id, Bookmarks.name, `url`, `color`, GROUP_CONCAT(Tags.name) AS Tags FROM Bookmarks ' +
         'LEFT JOIN bookmark_collections ON bookmark_collections.BookmarkId = Bookmarks.id ' +
         'LEFT JOIN bookmark_tags ON bookmark_tags.BookmarkId = Bookmarks.id ' +
+        'LEFT JOIN Tags ON Tags.id = bookmark_tags.TagId ' +
         'WHERE bookmark_collections.BookmarkId IS NULL ' +
-        'AND Bookmarks.UserId = ' + request.session.user.id, { type: QueryTypes.SELECT }));
+        'AND Bookmarks.UserId = ' + request.session.user.id + ' ' + 
+        'GROUP BY Bookmarks.id', { type: QueryTypes.SELECT }));
 
     returnObj.bookmarks = uncategorizedBookmarks;
+    for (let i = 0; i < uncategorizedBookmarks.length; i++) {
+        returnObj.bookmarks[i].Tags = returnObj.bookmarks[i].Tags.split(',').map (e => ({tagName: e}));
+    }
 
     // 2. GET ALL TOP-LVL COLLECTIONS
     const topLevelCollections = (await db.Collection.findAll({
@@ -67,6 +72,7 @@ router.get("/home", async function(request, response) {
 
     returnObj.collections = topLevelCollections;
     returnObj.username = username.dataValues.username;
+    // response.json(returnObj);
     response.render("home", returnObj);
 });
 

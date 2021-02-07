@@ -132,14 +132,16 @@ ul.color-dropdown {
   background-color: rgb(167, 12, 12);
 }
 
-/* imports the font */
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-
-/* adds icon in front of the element */
-.tag:before { 
-  /* https://github.com/google/material-design-icons/blob/master/iconfont/codepoints */
-  content: "\E3E7"; 
-  font-family: "Material Icons"; 
+.tag { 
+  text-align: center;
+  color: rgb(90, 90, 90);
+  font-size: 14px;
+  margin: 0 5px;
+  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  background-image: url(../imgs/tagIcon.svg);
+  opacity: 0.95;
+  background-size: 100% 100%;
+  min-width: 60px;
 }
 
 @media only screen and (max-width: 992.8px) {

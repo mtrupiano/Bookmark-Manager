@@ -4,12 +4,32 @@
 
         <i class="material-icons" style="padding-left: 2px; margin-right: 16px">bookmark</i>
         {{name}}
-        <button class="btn bookmark-btn" data-url="{{url}}">GO</button>
+        <button class="btn entity-btn bookmark-btn" data-url="{{url}}">GO</button>
         <button class="btn bookmark-move-btn" data-id="{{id}}">MOVE</button>
         <button class="btn bookmark-delete-btn" data-id="{{id}}">DELETE</button>
 
-        {{#if tags}}
-        <button>{{name}}</button>
+        {{#if Tags}}
+            {{#if (moreThanThreeTags Tags)}}
+                <div class="tag entity-btn">{{Tags.0.tagName}}</div>
+                <div class="tag entity-btn">{{Tags.1.tagName}}</div>
+                <div class="tag entity-btn">{{Tags.2.tagName}}</div>
+                <i class="material-icons dropdown-trigger show-all-tags entity-btn" 
+                    style="color: #7e8686" data-target="all-tags-{{id}}">more_horiz</i>
+                
+                <ul id="all-tags-{{id}}" class="dropdown-content">
+                    {{#each Tags}}
+                        {{#if (remainingTags @index)}}
+                        <li class="valign-wrapper">
+                            <div class="tag">{{tagName}}</div>
+                        </li>
+                        {{/if}}
+                    {{/each}}
+                </ul>
+            {{else}}
+                {{#each Tags}}
+                    <div class="tag entity-btn">{{tagName}}</div>
+                {{/each}}
+            {{/if}}
         {{/if}}
 
         {{#if color}}

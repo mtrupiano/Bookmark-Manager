@@ -127,6 +127,10 @@ $(document).ready( () => {
 
     });
 
+    $('.show-all-tags').on('click', (event) => {
+        event.stopPropagation();
+    });
+
     $('.color-dropdown-select').on('click', (event) => {
         event.stopPropagation();
 

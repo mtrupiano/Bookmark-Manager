@@ -36,6 +36,16 @@ hbs.handlebars.registerHelper('isWhite', function(color) {
     return color === "rgb(255, 255, 255)";
 });
 
+hbs.handlebars.registerHelper('moreThanThreeTags', function(Tags) {
+    return Tags.length > 3;
+});
+
+hbs.handlebars.registerHelper('remainingTags', function(idx) {
+    return idx > 2;
+});
+
+
+
 // Controllers
 const userController = require('./controllers/userController');
 app.use(userController);
@@ -53,7 +63,7 @@ app.use(require('./controllers/listRenderer'));
 app.use(require('./controllers/modalRenderer'));
 app.use(require('./controllers/renderingRoutes'));
 
-db.sequelize.sync({ force: process.env.FORCE_SYNC }).then(function () {
+db.sequelize.sync({ force: false }).then(function () {
     app.listen(PORT, function () {
         console.log("App listening on PORT " + PORT);
     });
