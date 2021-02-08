@@ -144,6 +144,44 @@ ul.color-dropdown {
   min-width: 60px;
 }
 
+.entity-buttons {
+  width: 20%;
+  justify-content: space-between;
+}
+
+.entity-buttons>button {
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 12px;
+  height: 30px;
+  min-width: 40px;
+  padding: 0;
+  width: 60px;
+  text-align: center;
+  line-height: 1;
+  border-radius: 15px;
+}
+
+.tags-dropdown {
+  max-width: 215px;
+  border-radius: 8px;
+}
+
+.tags-dropdown>li:hover {
+  background-color: #fff;
+}
+
+.tags-dropdown>li {
+  cursor: default;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tags-dropdown>li>.tag {
+  cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 @media only screen and (max-width: 992.8px) {
   button.sidenav-trigger {
     display: flex;

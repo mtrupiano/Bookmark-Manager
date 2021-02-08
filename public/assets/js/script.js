@@ -36,7 +36,9 @@ $(document).ready( () => {
     });
 
     $('.sidenav').sidenav();
-    $('.dropdown-trigger').dropdown({    });
+    $('.dropdown-trigger').dropdown({ 
+        coverTrigger: false
+    });
 
     $('#sign-out-btn').on('click', (event) => {
         event.preventDefault();
@@ -83,8 +85,9 @@ $(document).ready( () => {
     });
 
     // Hide color picker if user clicks anywhere else in the window
-    $(window).click((event) => {
+    $(window).on('click', (event) => {
         $('.dropdown-trigger').dropdown('close');
+        $('.show-all-tags').dropdown('close');
     });
 
     $('.bookmark-btn').on('click', (event) => {
@@ -104,6 +107,15 @@ $(document).ready( () => {
 
         });
     });
+
+    $('.show-all-tags').dropdown({
+        coverTrigger: false,
+        constrainWidth: false,
+    });
+
+    $('.show-all-tags').on('click', (event) => {
+        event.stopPropagation();
+    })
 
     $('.collection-delete-btn').on('click', (event) => {
         event.stopPropagation();
