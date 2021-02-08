@@ -7,16 +7,18 @@
         <div class="entity-buttons valign-wrapper">
 
             <button class="btn entity-btn bookmark-btn" data-url="{{url}}">GO</button>
-            <button class="valign-wrapper btn bookmark-move-btn" data-id="{{id}}">MOVE</button>
-            <button class="btn bookmark-delete-btn" data-id="{{id}}">DELETE</button>
+            <button class="btn entity-btn bookmark-move-btn" data-id="{{id}}">MOVE</button>
+            <button class="btn entity-btn bookmark-delete-btn" data-id="{{id}}">DELETE</button>
         </div>
 
         {{#if Tags}}
+            <div class="tags">
+
             {{#if (moreThanThreeTags Tags)}}
-                <div class="tag entity-btn">{{Tags.0.tagName}}</div>
-                <div class="tag entity-btn">{{Tags.1.tagName}}</div>
-                <div class="tag entity-btn">{{Tags.2.tagName}}</div>
-                <i class="material-icons show-all-tags entity-btn" 
+                <div class="tag">{{Tags.0.tagName}}</div>
+                <div class="tag">{{Tags.1.tagName}}</div>
+                <div class="tag">{{Tags.2.tagName}}</div>
+                <i class="material-icons show-all-tags" 
                     style="color: #7e8686" data-target="all-tags-{{id}}">more_horiz</i>
                 
                 <ul id="all-tags-{{id}}" class="dropdown-content tags-dropdown">
@@ -30,9 +32,11 @@
                 </ul>
             {{else}}
                 {{#each Tags}}
-                    <div class="tag entity-btn">{{tagName}}</div>
+                    <div class="tag">{{tagName}}</div>
                 {{/each}}
             {{/if}}
+            
+            </div>
         {{/if}}
 
         {{#if color}}

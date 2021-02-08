@@ -8,7 +8,8 @@ $(document).ready( () => {
     // Initialize Materialize tabs
     $('.tabs').tabs();
 
-    $("#login-btn").click((event) => {
+    // Handle clicking log-in button
+    $("#login-btn").on('click', (event) => {
         event.preventDefault();
 
         const username = $('#login-username-input').val().trim();
@@ -17,11 +18,14 @@ $(document).ready( () => {
         $.post("/login", {
             username,
             password
-        }).then(() => {
+        }).then( () => {
             location.replace("/home");
-        }).fail(err => alert(err.responseText));
+        }).fail( (err) => {
+            alert(err.responseText)
+        });
     });
 
+    // Handle clicking sign-up button
     $('#signup-btn').on('click', (event) => {
         event.preventDefault();
 
@@ -30,24 +34,22 @@ $(document).ready( () => {
         $.post("/signup", {
             username,
             password
-        }).then(() => {
+        }).then( () => {
             location.replace("/");
-        }).fail(err => alert(err.responseText));
+        }).fail( (err) => {
+            alert(err.responseText)
+        });
     });
 
-    $('.sidenav').sidenav();
-    $('.dropdown-trigger').dropdown({ 
-        coverTrigger: false
-    });
-
+    // Handle clicking sign out button
     $('#sign-out-btn').on('click', (event) => {
         event.preventDefault();
         $.ajax({
             url: "/logout",
             type: "GET"
-        }).then(() => {
+        }).then( () => {
             location.replace('/')
-        }).fail((err) => {
+        }).fail( (err) => {
             console.log(err);
         });
     });
@@ -84,7 +86,7 @@ $(document).ready( () => {
         console.log("New bookmark in collection " + targetCollectionID);
     });
 
-    // Hide color picker if user clicks anywhere else in the window
+    // Close dropdowns if user clicks anywhere else in the window
     $(window).on('click', (event) => {
         $('.dropdown-trigger').dropdown('close');
         $('.show-all-tags').dropdown('close');
@@ -108,11 +110,24 @@ $(document).ready( () => {
         });
     });
 
+    // Configure materialize dropdown for color picker
+    $('.color-dropdown-trigger-bookmark').dropdown({
+        coverTrigger: false,
+        onOpenEnd: () => { // slightly reposition dropdown after it's done opening
+            const left = $('.color-dropdown').css("left");
+            const pix = parseFloat(left.substring(0, left.length - 2)) - 5;
+         
+            $('.color-dropdown').css("left", pix + 'px');
+        }
+    });
+
+    // Configure materialize dropdown for showing remaining tags
     $('.show-all-tags').dropdown({
         coverTrigger: false,
         constrainWidth: false,
     });
 
+    // Block remaining tag dropdown from triggering entity expand
     $('.show-all-tags').on('click', (event) => {
         event.stopPropagation();
     })
@@ -129,20 +144,18 @@ $(document).ready( () => {
             alert(err.responseText);
         });
     });
+
     $('.bookmark-move-btn').on('click', (event) => {
         event.stopPropagation();
         const id = $(event.target).attr("data-id");
     });
+
     $('.collection-move-btn').on('click', (event) => {
         event.stopPropagation();
         const id = $(event.target).attr("data-id");
-
     });
 
-    $('.show-all-tags').on('click', (event) => {
-        event.stopPropagation();
-    });
-
+    // Handle changing an entity's color
     $('.color-dropdown-select').on('click', (event) => {
         event.stopPropagation();
 

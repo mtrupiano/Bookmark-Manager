@@ -96,7 +96,7 @@ ul.color-dropdown {
 
 .color-dropdown-trigger-collection, 
 .color-dropdown-trigger-bookmark {
-  right: 50px
+  right: 50px;
 }
 
 .color-dropdown i {
@@ -145,20 +145,23 @@ ul.color-dropdown {
 }
 
 .entity-buttons {
-  width: 20%;
   justify-content: space-between;
 }
 
 .entity-buttons>button {
+  margin: 0 3px;
   font-family: 'Maven Pro', sans-serif;
   font-size: 12px;
   height: 30px;
-  min-width: 40px;
+  min-width: 65px;
   padding: 0;
-  width: 60px;
   text-align: center;
   line-height: 1;
   border-radius: 15px;
+}
+
+.tags {
+  display: flex;
 }
 
 .tags-dropdown {
