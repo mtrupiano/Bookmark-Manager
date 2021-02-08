@@ -25,15 +25,28 @@
     </div>
 </nav>
 
-<div class="container">
-    <ul class="collapsible expandable"> 
-        {{#each collections}}
-            {{> collectionPartial}}
-        {{/each}}
+<div class="container" style="margin-top: 10px">
+    <div class="row valign-wrapper">
+        <div class="col s11">
+            <ul class="collapsible expandable"> 
+                {{#each collections}}
+                    {{> collectionPartial}}
+                {{/each}}
 
-        {{#each bookmarks}}
-            {{> bookmarkPartial}}
-        {{/each}}
-    </ul>
+                {{#each bookmarks}}
+                    {{> bookmarkPartial}}
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col s1" style="margin-left: 20px;">
+            <a class="btn-floating tooltipped" data-position="left" 
+                data-tooltip="New collection" style="margin-bottom: 5px">
+                <i class="material-icons">folder</i>
+            </a>
+            <a class="btn-floating tooltipped" data-position="left" data-tooltip="New bookmark">
+                <i class="material-icons">bookmark</i>
+            </a>
+        </div>
+    </div>
 </div>
 

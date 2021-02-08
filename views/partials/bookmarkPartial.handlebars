@@ -3,22 +3,23 @@
     <a href="#" value="{{id}}" class="valign-wrapper entity-entry">
 
         <i class="material-icons" style="padding-left: 2px; margin-right: 16px">bookmark</i>
-        {{name}}
-        <div class="entity-buttons valign-wrapper">
 
+        {{name}}
+
+        <div class="entity-buttons valign-wrapper" style="margin-left: 10px;">
             <button class="btn entity-btn bookmark-btn" data-url="{{url}}">GO</button>
             <button class="btn entity-btn bookmark-move-btn" data-id="{{id}}">MOVE</button>
             <button class="btn entity-btn bookmark-delete-btn" data-id="{{id}}">DELETE</button>
         </div>
 
         {{#if Tags}}
-            <div class="tags">
+            <div class="tags valign-wrapper">
 
             {{#if (moreThanThreeTags Tags)}}
                 <div class="tag">{{Tags.0.tagName}}</div>
                 <div class="tag">{{Tags.1.tagName}}</div>
                 <div class="tag">{{Tags.2.tagName}}</div>
-                <i class="material-icons show-all-tags" 
+                <i class="material-icons show-all-tags valign-wrapper" 
                     style="color: #7e8686" data-target="all-tags-{{id}}">more_horiz</i>
                 
                 <ul id="all-tags-{{id}}" class="dropdown-content tags-dropdown">

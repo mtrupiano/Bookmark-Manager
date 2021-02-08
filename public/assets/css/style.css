@@ -11,6 +11,15 @@ a {
   font-size: 16px
 }
 
+.btn, .btn-floating {
+  font-family: 'Maven Pro', sans-serif;
+  background-color: rgba(214, 108, 214, 0.87);
+}
+
+.btn:hover, .btn-floating:hover {
+  background-color: rgba(175, 89, 175, 0.87);
+}
+
 .collapsible {
   border-radius: 5px;
   margin: 0.5rem 0 0.5rem 0;
@@ -135,13 +144,13 @@ ul.color-dropdown {
 .tag { 
   text-align: center;
   color: rgb(90, 90, 90);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 5px;
-  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  padding: 0.15rem 1rem 0.15rem 0.5rem;
   background-image: url(../imgs/tagIcon.svg);
   opacity: 0.95;
   background-size: 100% 100%;
-  min-width: 60px;
+  min-width: 50px;
 }
 
 .entity-buttons {
@@ -150,7 +159,6 @@ ul.color-dropdown {
 
 .entity-buttons>button {
   margin: 0 3px;
-  font-family: 'Maven Pro', sans-serif;
   font-size: 12px;
   height: 30px;
   min-width: 65px;
@@ -185,6 +193,16 @@ ul.color-dropdown {
   margin-bottom: 5px;
 }
 
+.material-tooltip {
+  border-radius: 18px;
+}
+
+@media only screen and (min-width: 993px) {
+    .container {
+      width: 80%;
+    }
+}
+
 @media only screen and (max-width: 992.8px) {
   button.sidenav-trigger {
     display: flex;
@@ -192,4 +210,9 @@ ul.color-dropdown {
   .sidenav {
     top: 0;
   }
+
+  .tags {
+    display: none;
+  }
+
 }

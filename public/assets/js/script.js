@@ -8,6 +8,8 @@ $(document).ready( () => {
     // Initialize Materialize tabs
     $('.tabs').tabs();
 
+    $('.tooltipped').tooltip();
+
     // Handle clicking log-in button
     $("#login-btn").on('click', (event) => {
         event.preventDefault();
