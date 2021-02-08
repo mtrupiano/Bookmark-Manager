@@ -39,14 +39,49 @@
             </ul>
         </div>
         <div class="col s1" style="margin-left: 20px;">
-            <a class="btn-floating tooltipped" data-position="left" 
-                data-tooltip="New collection" style="margin-bottom: 5px">
+            <a class="btn-floating tooltipped modal-trigger" href="#newCollectionModal" 
+                data-position="left" data-tooltip="New collection" style="margin-bottom: 5px">
                 <i class="material-icons">folder</i>
             </a>
-            <a class="btn-floating tooltipped" data-position="left" data-tooltip="New bookmark">
+            <a class="btn-floating tooltipped modal-trigger" href="#newBookmarkModal"
+                data-position="left" data-tooltip="New bookmark">
                 <i class="material-icons">bookmark</i>
             </a>
         </div>
     </div>
 </div>
+
+<div id="newCollectionModal" class="modal">
+    <div class="modal-content">
+        <h4>New Collection</h4>
+        <div class="input-field">
+            <input type="text" id="new-collection-name" placeholder="Collection Name">
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn modal-close" id="add-collection-btn">Add</a>
+            <a href="" class="btn cancel-btn modal-close">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<div id="newBookmarkModal" class="modal">
+    <div class="modal-content">
+        <h4>New Bookmark</h4>
+
+        <div class="input-field">
+            <input type="text" id="new-bookmark-name" placeholder="Bookmark Name">
+        </div>
+        <div class="input-field">
+            <input type="text" id="new-bookmark-url" placeholder="URL">
+        </div>
+        <div class="input-field">
+            <input type="text" id="new-bookmark-comment" placeholder="Comment">
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn modal-close" id="add-bookmark-btn">Add</a>
+            <a href="" class="btn cancel-btn modal-close">Cancel</a>
+        </div>
+    </div>
+</div>
+
 

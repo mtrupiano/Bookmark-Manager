@@ -8,7 +8,17 @@ $(document).ready( () => {
     // Initialize Materialize tabs
     $('.tabs').tabs();
 
-    $('.tooltipped').tooltip();
+    $('.tooltipped').tooltip({
+        inDuration: 200,
+        outDuration: 150,
+        margin: 3
+    });
+
+    $('.modal').modal();
+    $('select').formSelect();
+    $('#modal-color-select').dropdown({
+        coverTrigger: false
+    });
 
     // Handle clicking log-in button
     $("#login-btn").on('click', (event) => {
@@ -215,5 +225,43 @@ $(document).ready( () => {
         });
     });
 
+    $('#add-collection-btn').on('click', (event) => {
+        event.stopPropagation();
+        const newName = $('#new-collection-name').val().trim();
+        $.ajax({
+            url: '/api/collections',
+            type: "POST",
+            data: {
+                "name": newName,
+            }
+        }).then( () => {
+            $('.modal').modal('close');
+            location.reload();
+        }).fail( (err) => {
+            alert(err.responseText);
+        })
+    });
+
+    $('#add-bookmark-btn').on('click', (event) => {
+        event.stopPropagation();
+        const newName = $('#new-bookmark-name').val().trim();
+        const URL = $('#new-bookmark-url').val();
+        const comment = $('#new-bookmark-comment').val().trim();
+
+        $.ajax( {
+            url: '/api/bookmarks',
+            type: "POST",
+            data: {
+                'name': newName,
+                'url': URL,
+                'comment': comment
+            }
+        }).then( () => {
+            $('.modal').modal('close');
+            location.reload();
+        }).fail( (err) => {
+            alert(err.responseText);
+        })
+    });
 
 });

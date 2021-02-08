@@ -25,8 +25,11 @@ router.get("/home", async function(request, response) {
         'GROUP BY Bookmarks.id', { type: QueryTypes.SELECT }));
 
     returnObj.bookmarks = uncategorizedBookmarks;
+
     for (let i = 0; i < uncategorizedBookmarks.length; i++) {
-        returnObj.bookmarks[i].Tags = returnObj.bookmarks[i].Tags.split(',').map (e => ({tagName: e}));
+        if (uncategorizedBookmarks[i].Tags) {
+            returnObj.bookmarks[i].Tags = returnObj.bookmarks[i].Tags.split(',').map (e => ({tagName: e}));
+        }
     }
 
     // 2. GET ALL TOP-LVL COLLECTIONS

@@ -32,7 +32,6 @@ a {
   border-radius: 5px;
 }
 
-
 .collapsible-body ul li a.nothing-here:hover {
   background-color:  #fff;
 }
@@ -92,7 +91,6 @@ ul.color-dropdown {
 .color-dropdown-trigger-collection, 
 .color-dropdown-trigger-bookmark {
   display: flex;
-  position: absolute;
 }
 
 .add-entity-trigger {
@@ -126,7 +124,7 @@ ul.color-dropdown {
   background-color: rgb(5, 117, 5);
 }
 
-.bookmark-delete-btn, .collection-delete-btn {
+.bookmark-delete-btn, .collection-delete-btn, .cancel-btn {
   background-color: rgb(223, 19, 19);
 }
 
@@ -137,7 +135,8 @@ ul.color-dropdown {
 .collection-delete-btn:hover, 
 .collection-delete-btn:active, 
 .collection-delete-btn:visited, 
-.collection-delete-btn:focus {
+.collection-delete-btn:focus,
+.cancel-btn:hover {
   background-color: rgb(167, 12, 12);
 }
 
@@ -194,6 +193,10 @@ ul.color-dropdown {
 }
 
 .material-tooltip {
+  border-radius: 18px;
+}
+
+.modal {
   border-radius: 18px;
 }
 
