@@ -166,13 +166,9 @@ router.put("/name", function(request, response) {
         where: {
             id: request.body.id
         }
-    }).then((result) => {
-        if (result.affectedRows === 0) {
-            // send a status 
-        } else {
-            response.json(result.affectedRows);
-        }
-    }).catch((err) => {
+    }).then( (result) => {
+        response.json(result);
+    }).catch( (err) => {
         response.status(500).json(err);
     });
 });
@@ -191,13 +187,9 @@ router.put("/url", function(request, response) {
         where: {
             id: request.body.id
         }
-    }).then((result) => {
-        if (result.affectedRows === 0) {
-            // send a status 
-        } else {
-            response.json(result.affectedRows);
-        }
-    }).catch((err) => {
+    }).then( (result) => {
+        response.json(result);
+    }).catch( (err) => {
         response.status(500).json(err);
     });
 });
@@ -216,13 +208,9 @@ router.put("/comment", function(request, response) {
         where: {
             id: request.body.id
         }
-    }).then((result) => {
-        if (result.affectedRows === 0) {
-            // send a status 
-        } else {
-            response.json(result.affectedRows);
-        }
-    }).catch((err) => {
+    }).then( (result) => {
+        response.json(result);
+    }).catch( (err) => {
         response.status(500).json(err);
     });
 });
@@ -243,14 +231,9 @@ router.put("/color", function(request, response) {
         where: {
             id: { [ Op.in ]: request.body.ids }
         }
-    }).then((result) => {
-        if (result.affectedRows === 0) {
-            // send a status 
-            console.log("No rows affected");
-        } else {
-            response.json(result);
-        }
-    }).catch((err) => {
+    }).then( (result) => {
+        response.json(result);
+    }).catch( (err) => {
         response.status(500).json(err);
     });
 });

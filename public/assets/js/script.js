@@ -20,6 +20,79 @@ $(document).ready( () => {
         coverTrigger: false
     });
 
+    $('#newBookmarkModal').modal({
+        onOpenStart: function(modal, trigger) {
+            const id = $($(trigger).children()[0]).attr("value");
+            if (id) {
+                $('#add-bookmark-btn').hide();
+                $('#bookmark-modal-header').text("View/edit Bookmark");
+                $.ajax({
+                    url: '/api/bookmarks?id=' + id,
+                    method: 'GET'
+                }).then( (res) => {
+                    $('#bookmark-name').val(res.name);
+                    $('#bookmark-url').val(res.url);
+                    $('.bookmark-btn').attr('data-url', res.url);
+                    $('#bookmark-comment').val(res.comment);
+                    $('#save-bookmark-btn').attr("data-id", id);
+                    $('#save-bookmark-btn').show();
+                    const tagNames = res.Tags.map(t => ( {tag: t.tagName} ));
+                    console.log(tagNames);
+
+                    $('.modal-chips').chips({
+                        secondaryPlaceholder: '+Tag',
+                        data: tagNames,
+                        onChipAdd: (event, chip) => { addTagFromModal(id, chip); },
+                        onChipSelect: () => { },
+                        onChipDelete: (event, chip) => { deleteTagFromModal(id, chip); }
+                    });
+
+                }).fail( (err) => {
+                    alert(err.responseText);
+                });
+            } else {
+
+            }
+            console.log(id);
+        }
+    });
+
+    function addTagFromModal(bookmark, chip) {
+        $.ajax({
+            url:'/api/tags/',
+            method: 'POST',
+            data: {
+                name: chip.firstChild.textContent,
+                bookmark: bookmark
+            }
+        }).then( (res) => {
+
+        }).fail( (err) => {
+            alert(err.responseText);
+        });
+    }
+
+    function deleteTagFromModal(bookmark, chip) {
+
+        $.ajax({
+            url: '/api/tags/?name=' + chip.firstChild.textContent,
+            method: 'GET'
+        }).then( (res) => {
+            if (res.name) {
+                $.ajax({
+                    url: '/api/tags/' + res.id + '/' + bookmark,
+                    method: 'DELETE'
+                }).then( (res) => {
+
+                }).fail( (err) => {
+                    alert(err.responseText);
+                });
+            }
+        }).fail( (err) => {
+            alert(err.responseText);
+        });
+    }
+
     // Handle clicking log-in button
     $("#login-btn").on('click', (event) => {
         event.preventDefault();
@@ -68,14 +141,6 @@ $(document).ready( () => {
 
     $('.bookmark-li').on('click', (event) => {
         event.preventDefault();
-        const target = $(event.target);
-        let id;
-        if (target.prop("tagName") === "I") {
-            id = target.parent().attr("value");
-        } else {
-            id = target.attr("value");
-        }
-        console.log(id);
     });
 
     $('.dropdown-content').on('click', (event) => {
@@ -100,12 +165,13 @@ $(document).ready( () => {
 
     // Close dropdowns if user clicks anywhere else in the window
     $(window).on('click', (event) => {
-        $('.dropdown-trigger').dropdown('close');
+        // $('.dropdown-trigger').dropdown('close');
         $('.show-all-tags').dropdown('close');
     });
 
     $('.bookmark-btn').on('click', (event) => {
         event.preventDefault();
+        event.stopPropagation();
         window.open($(event.target).attr("data-url"));
     });
 
@@ -115,10 +181,10 @@ $(document).ready( () => {
         $.ajax({
             url: "/api/bookmarks/" + id,
             method: "DELETE"
-        }).then( () => {
-
+        }).then( (res) => {
+            location.reload();
         }).fail( (err) => {
-
+            alert(err.responseText);
         });
     });
 
@@ -150,7 +216,7 @@ $(document).ready( () => {
         $.ajax({
             url: "/api/collections/" + id,
             method: "DELETE"
-        }).then(() => {
+        }).then( (res) => {
             location.reload();
         }).fail((err) => {
             alert(err.responseText);
@@ -211,7 +277,7 @@ $(document).ready( () => {
                 "newColor": newColor
             },
             processData: true
-        }).then(() => {
+        }).then( (res) => {
 
             if (newColor === "rgb(255, 255, 255)") {
                 $(targetEntity.children()[0]).text("panorama_fish_eye");
@@ -234,7 +300,7 @@ $(document).ready( () => {
             data: {
                 "name": newName,
             }
-        }).then( () => {
+        }).then( (res) => {
             $('.modal').modal('close');
             location.reload();
         }).fail( (err) => {
@@ -244,10 +310,11 @@ $(document).ready( () => {
 
     $('#add-bookmark-btn').on('click', (event) => {
         event.stopPropagation();
-        const newName = $('#new-bookmark-name').val().trim();
-        const URL = $('#new-bookmark-url').val();
-        const comment = $('#new-bookmark-comment').val().trim();
+        const newName = $('#bookmark-name').val().trim();
+        const URL = $('#bookmark-url').val();
+        const comment = $('#bookmark-comment').val().trim();
 
+        console.log("Creating a new one, too")
         $.ajax( {
             url: '/api/bookmarks',
             type: "POST",
@@ -263,5 +330,46 @@ $(document).ready( () => {
             alert(err.responseText);
         })
     });
+
+    $('#save-bookmark-btn').on('click', (event) => {
+        const id = $('#save-bookmark-btn').attr("data-id");
+        $.ajax({
+            url: "/api/bookmarks/name",
+            method: "PUT",
+            data: {
+                id: id,
+                newName: $('#bookmark-name').val()
+            }
+        }).then( (res) => {
+            $.ajax({
+                url: "/api/bookmarks/url",
+                method: "PUT",
+                data: {
+                    id: id,
+                    newURL: $('#bookmark-url').val()
+                }
+            }).then( (res) => {
+                $.ajax({
+                    url: "/api/bookmarks/comment",
+                    method: "PUT",
+                    data: {
+                        id: id,
+                        newComment: $('#bookmark-comment').val()
+                    }
+                }).then( (res) => {
+
+                }).fail( (err) => {
+                    alert(err.responseText);
+                });
+            }).fail((err) => {
+                alert(err.responseText);
+            });
+
+            location.reload();
+        }).fail( (err) => {
+            alert(err.responseText);
+        });
+    });
+    
 
 });

@@ -10,16 +10,44 @@ router.get("/", function (request, response) {
         response.status(401).send("Not logged in");
         return;
     }
-    db.Tag.findAll({
-        where: {
-            UserId: request.session.user.id
-        },
-        attributes: ['name']
-    }).then(function (result) {
-        response.json(result);
-    }).catch((err) => {
-        response.status(500).json(err);
-    });
+
+    if (request.query.name !== null) {
+        db.Tag.findOne({
+            where: {
+                UserId: request.session.user.id,
+                name: request.query.name
+            },
+            attributes: ['name', 'id']
+        }).then(function (result) {
+            response.json(result);
+        }).catch( (err) => {
+            response.status(500).json(err);
+        })
+    } else if (request.query.id) {
+
+        db.Tag.findOne({
+            where: {
+                UserId: request.session.user.id,
+                id: request.query.id
+            },
+            attributes: ['name']
+        }).then(function (result) {
+            response.json(result);
+        }).catch((err) => {
+            response.status(500).json(err);
+        });
+    } else { // Find all
+        db.Tag.findAll({
+            where: {
+                UserId: request.session.user.id
+            },
+            attributes: ['name']
+        }).then( (result) => {
+            response.json(result);
+        }).catch( (err) => {
+            response.status(500).json(err);
+        })
+    }
 });
 
 // get all tags that are attached to a bookmark
@@ -44,7 +72,7 @@ router.get("/bookmark", function (request, response) {
             },
             attributes: []
         }],
-        attributes: ['name']
+        attributes: ['name', 'id']
     }).then(function (result) {
         response.json(result);
     }).catch((err) => {

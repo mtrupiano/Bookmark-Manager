@@ -200,6 +200,10 @@ ul.color-dropdown {
   border-radius: 18px;
 }
 
+.modal .btn {
+  border-radius: 18px;
+}
+
 @media only screen and (min-width: 993px) {
     .container {
       width: 80%;
