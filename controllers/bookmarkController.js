@@ -124,6 +124,8 @@ router.post("/", function(request, response) {
         return;
     }
 
+    const queryResults = [];
+
     db.Bookmark.create({
         name: request.body.name,
         url: request.body.url,
@@ -131,21 +133,64 @@ router.post("/", function(request, response) {
         color: request.body.color,
         UserId: request.session.user.id
     }).then( (result) => {
+        queryResults.push(result);
         if (request.body.collections) {
-            const insertArr = request.body.collections.map(
-                e => ({ BookmarkId: result.dataValues.id, CollectionId: e })
-            );
+            const insertArr = 
+                request.body.collections.map( 
+                    e => ({ BookmarkId: result.dataValues.id, CollectionId: e })
+                );
+                
+            db.sequelize.models.bookmark_collections.bulkCreate(insertArr)
+                .then( (linkResult) => {
+                    queryResults.push(linkResult);
+                }).catch( (err) => {
+                    response.status(500).json(err);
+                });
+        } 
+                
+        if (request.body.tags !== null) {
+            db.Tag.findAll({
+                where: {
+                    name: { [ Op.in ]: request.body.tags }
+                },
+                attributes: ['name', 'id']
+            }).then( async (results) => {
+                queryResults.push(results);
 
-            db.sequelize.models.bookmark_collections.bulkCreate(
-                insertArr
-            ).then( (linkResult) => {
-                response.json( [result, linkResult] );
+                const foundNames = results.map(r => r.name);
+                const tagArr = results.map( 
+                    e => ({ BookmarkId: result.dataValues.id, TagId: e.id })
+                );
+
+                for (let i = 0; i < request.body.tags.length; i++) {
+                    if (!foundNames.includes(request.body.tags[i])) {
+                        const newTag = await db.Tag.create({
+                            name: request.body.tags[i],
+                            UserId: request.session.user.id
+                        });
+
+                        queryResults.push(newTag);
+
+                        tagArr.push({ 
+                            BookmarkId: result.dataValues.id, 
+                            TagId: newTag.dataValues.id
+                        });
+                    }
+                }
+
+                db.sequelize.models.bookmark_tags.bulkCreate(tagArr)
+                    .then( (tagLinkResult) => {
+                        queryResults.push(tagLinkResult);
+                    }).catch( (err) => {
+                        response.status(500).json(err);
+                    });
             }).catch( (err) => {
                 response.status(500).json(err);
-            });
-        } else {
-            response.json(result);
+            })
         }
+
+        response.json(queryResults);
+        
     }).catch( (err) => {
         response.status(500).json(err);
     });

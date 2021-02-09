@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 $(document).ready( () => {
 
+    const tags = [];
+
     // Initialize Materialize tabs
     $('.tabs').tabs();
 
@@ -20,10 +22,22 @@ $(document).ready( () => {
         coverTrigger: false
     });
 
+    // Configure materialize dropdown for color picker
+    $('.color-dropdown-trigger-bookmark').dropdown({
+        coverTrigger: false,
+        onOpenEnd: () => { // slightly reposition dropdown after it's done opening
+            const left = $('.color-dropdown').css("left");
+            const pix = parseFloat(left.substring(0, left.length - 2)) - 5;
+
+            $('.color-dropdown').css("left", pix + 'px');
+        }
+    });
+
     $('#newBookmarkModal').modal({
         onOpenStart: function(modal, trigger) {
             const id = $($(trigger).children()[0]).attr("value");
             if (id) {
+                $('#modal-go-btn').show();
                 $('#add-bookmark-btn').hide();
                 $('#bookmark-modal-header').text("View/edit Bookmark");
                 $.ajax({
@@ -51,9 +65,21 @@ $(document).ready( () => {
                     alert(err.responseText);
                 });
             } else {
+                $('#modal-go-btn').hide();
+                $('#add-bookmark-btn').show();
+                $('.modal-chips').chips({
+                    secondaryPlaceholder: '+Tag',
+                    onChipAdd: (event, chip) => {
+                        tags.push(chip.firstChild.textContent);
+                    },
+                    onChipDelete: (event, chip) => {
+                        const toDeleteIdx = 
+                            tags.findIndex( e => e === chip.firstChild.textContent);
+                        tags.splice(toDeleteIdx, 1);
+                    }
+                });
 
             }
-            console.log(id);
         }
     });
 
@@ -133,7 +159,7 @@ $(document).ready( () => {
             url: "/logout",
             type: "GET"
         }).then( () => {
-            location.replace('/')
+            location.replace('/');
         }).fail( (err) => {
             console.log(err);
         });
@@ -165,7 +191,7 @@ $(document).ready( () => {
 
     // Close dropdowns if user clicks anywhere else in the window
     $(window).on('click', (event) => {
-        // $('.dropdown-trigger').dropdown('close');
+        $('.color-dropdown-trigger-bookmark').dropdown('close');
         $('.show-all-tags').dropdown('close');
     });
 
@@ -186,17 +212,6 @@ $(document).ready( () => {
         }).fail( (err) => {
             alert(err.responseText);
         });
-    });
-
-    // Configure materialize dropdown for color picker
-    $('.color-dropdown-trigger-bookmark').dropdown({
-        coverTrigger: false,
-        onOpenEnd: () => { // slightly reposition dropdown after it's done opening
-            const left = $('.color-dropdown').css("left");
-            const pix = parseFloat(left.substring(0, left.length - 2)) - 5;
-         
-            $('.color-dropdown').css("left", pix + 'px');
-        }
     });
 
     // Configure materialize dropdown for showing remaining tags
@@ -314,16 +329,16 @@ $(document).ready( () => {
         const URL = $('#bookmark-url').val();
         const comment = $('#bookmark-comment').val().trim();
 
-        console.log("Creating a new one, too")
         $.ajax( {
-            url: '/api/bookmarks',
+            url: '/api/bookmarks/',
             type: "POST",
             data: {
                 'name': newName,
                 'url': URL,
-                'comment': comment
+                'comment': comment,
+                'tags': tags
             }
-        }).then( () => {
+        }).then( (e) => {
             $('.modal').modal('close');
             location.reload();
         }).fail( (err) => {
@@ -331,6 +346,7 @@ $(document).ready( () => {
         })
     });
 
+    // Handle saving edits to an existing bookmark
     $('#save-bookmark-btn').on('click', (event) => {
         const id = $('#save-bookmark-btn').attr("data-id");
         $.ajax({
