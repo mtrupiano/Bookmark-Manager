@@ -33,7 +33,9 @@ $(document).ready( () => {
         }
     });
 
+    // Configure modal form for creating/viewing a bookmark
     $('#newBookmarkModal').modal({
+        // When the modal is first opened, load content
         onOpenStart: function(modal, trigger) {
             const id = $($(trigger).children()[0]).attr("value");
             if (id) {
@@ -83,6 +85,7 @@ $(document).ready( () => {
         }
     });
 
+    // Helper function to add a new tag to an existing bookmark
     function addTagFromModal(bookmark, chip) {
         $.ajax({
             url:'/api/tags/',
@@ -98,6 +101,7 @@ $(document).ready( () => {
         });
     }
 
+    // Helper function to remove a tag from an existing bookmark
     function deleteTagFromModal(bookmark, chip) {
 
         $.ajax({
@@ -212,6 +216,13 @@ $(document).ready( () => {
         }).fail( (err) => {
             alert(err.responseText);
         });
+    });
+
+    // Handle clicking 'EDIT' button on a collection
+    $('.collection-edit-btn').on('click', (event) => {
+        event.stopPropagation();
+        const target = $(event.target);
+        const id = target.attr('data-id');
     });
 
     // Configure materialize dropdown for showing remaining tags
