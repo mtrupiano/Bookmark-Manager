@@ -3,9 +3,10 @@
         <i class="material-icons">folder</i>
         {{name}}
         <div class="entity-buttons">
-            <button class="btn entity-btn collection-edit-btn" data-id="{{id}}">EDIT</button>
-            <button class="btn collection-move-btn" data-id="{{id}}">MOVE</button>
-            <button class="btn collection-delete-btn" data-id="{{id}}">DELETE</button>
+            <button class="btn entity-btn collection-edit-btn modal-trigger" 
+                data-current-name="{{name}}" data-target='edit-collection-modal' data-id="{{id}}">EDIT</button>
+            <button class="btn entity-btn collection-move-btn" data-id="{{id}}">MOVE</button>
+            <button class="btn entity-btn collection-delete-btn" data-id="{{id}}">DELETE</button>
         </div>
 
         <div class="dropdown-trigger collection-add-dropdown-trigger add-entity-trigger valign-wrapper" 
@@ -13,9 +14,8 @@
             <i class="material-icons" style="margin: 0; color: grey">add</i>
         </div>
         <ul id="add-to-collection-{{id}}" class="dropdown-content add-entity-dropdown">
-            <li><div class="new-collection" data-id="{{id}}">New Collection</div></li>
-            <li class="divider" tabindex="-1"></li>
-            <li><div class="new-bookmark"   data-id="{{id}}">New Bookmark  </div></li>
+            <li class='valign-wrapper'><div class="new-collection" data-id="{{id}}">New Collection</div></li>
+            <li class='valign-wrapper'><div class="new-bookmark" data-id="{{id}}">New Bookmark</div></li>
         </ul>
 
         {{#if color}}

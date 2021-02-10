@@ -64,6 +64,24 @@
     </div>
 </div>
 
+<div class="modal" id="edit-collection-modal">
+    <div class="modal-content">
+        <h4>Edit Collection</h4>
+        <div class="row">
+            <div class="col">
+                <div class="input-field">
+                    <label for="edit-collection-name" class='active'>Name</label>
+                    <input type="text" id="edit-collection-name">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn modal-close" id="edit-collection-save-btn">Save</a>
+            <a href="" class="btn cancel-btn">Cancel</a>
+        </div>
+    </div>
+</div>
+
 <div id="newBookmarkModal" class="modal">
     <div class="modal-content">
         <h4 id="bookmark-modal-header" style="margin-bottom: 30px;">New Bookmark</h4>
@@ -77,13 +95,14 @@
             </div>
         </div>
         <div class="row valign-wrapper">
-            <div class="col s11">
+            <div class="col s9">
                 <div class="input-field">
                     <label for="bookmark-url">URL</label>
                     <input type="text" id="bookmark-url" placeholder="URL">
                 </div>
+
             </div>
-            <div class="col s1 valign-wrapper">
+            <div class="col s3">
                 <button class="btn bookmark-btn" id="modal-go-btn">GO</button>
             </div>
         </div>
