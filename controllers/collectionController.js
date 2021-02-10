@@ -24,6 +24,47 @@ router.get("/", function(request, response) {
     });
 });
 
+router.get('/path', async (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send("Not logged in");
+        return;
+    }
+
+    const parent = 
+        await db.Collection.findOne({
+            where: {
+                id: request.query.id
+            },
+            attributes: ['name', 'ParentCollection']
+        });
+
+
+    const path = [];
+    if (parent.ParentCollection) {
+        await pathHelper(path, parent.ParentCollection)
+    }
+    let pathStr = '/';
+    for (let i = path.length - 1; i >= 0; i--) {
+        pathStr += path[i] + '/';
+    }
+    response.json(pathStr);
+});
+
+async function pathHelper (path, id) {
+
+    const parent = await db.Collection.findOne({
+        where: {
+            id: id
+        },
+        attributes: ['name', 'ParentCollection']
+    });
+
+    path.push(parent.name);
+    if (parent.ParentCollection) {
+        await pathHelper(path, parent.ParentCollection);
+    }
+}
+
 // Get all sub-collections in a selected collection
 router.get("/subcollections", function(request, response) {
     // Check if logged in
