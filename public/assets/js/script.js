@@ -16,16 +16,25 @@ $(document).ready( () => {
         margin: 3
     });
 
-    $('.modal').modal();
+    // $('.modal').modal();
     $('select').formSelect();
     $('#modal-color-select').dropdown({
-        coverTrigger: false
+        coverTrigger: false,
+        constrainWidth: false
+    });
+
+    // Close dropdowns if user clicks anywhere else in the window
+    $(window).on('click', (event) => {
+        $('.color-dropdown-trigger-bookmark').dropdown('close');
+        $('.collection-add-dropdown-trigger').dropdown('close');
+        $('.show-all-tags').dropdown('close');
     });
 
     // Configure materialize dropdown for adding to a collection
     $('.collection-add-dropdown-trigger').dropdown({
-        coverTrigger: false
-    })
+        coverTrigger: false,
+        constrainWidth: false
+    });
 
     // Configure materialize dropdown for color picker
     $('.color-dropdown-trigger-bookmark').dropdown({
@@ -67,6 +76,7 @@ $(document).ready( () => {
                         onChipSelect: () => { },
                         onChipDelete: (event, chip) => { deleteTagFromModal(id, chip); }
                     });
+                    M.updateTextFields();
 
                 }).fail( (err) => {
                     alert(err.responseText);
@@ -87,8 +97,65 @@ $(document).ready( () => {
                 });
 
             }
+            M.updateTextFields();
         }
     });
+
+    /******************************************************
+     * Editing a collection
+     *      modal form
+     *      edit button
+     *      name edit input field
+     *      save button
+    *******************************************************/
+    // Configure the modal form
+    $('#edit-collection-modal').modal({
+        onOpenStart: (modal, trigger) => {
+            const currentName = $(modal).attr('data-current-name');
+            $('#edit-collection-name').val(currentName);
+            M.updateTextFields();
+        }
+    });
+
+    // Handle clicking 'EDIT' button on a collection
+    $('.collection-edit-btn').on('click', (event) => {
+        event.stopPropagation();
+        const target = $(event.target);
+        $('#edit-collection-modal').attr('data-current-name', target.attr('data-current-name'));
+        $('#edit-collection-save-btn').attr('data-id', target.attr('data-id'));
+        $('#edit-collection-modal').modal('open');
+        const id = target.attr('data-id');
+        
+    });
+
+    // Disable save button if name field empty
+    $('#edit-collection-name').on('input', (event) => {
+        if ($('#edit-collection-name').val() === '') {
+            $('#edit-collection-save-btn').addClass('disabled');
+        } else {
+            $('#edit-collection-save-btn').removeClass('disabled');
+        }
+    });
+
+    // Submit the api request to change the collection name when the 'Save' button is clicked
+    $('#edit-collection-save-btn').on('click', (event) => {
+        $.ajax({
+            url: '/api/collections/name',
+            method: 'PUT',
+            data: { 
+                id: $('#edit-collection-save-btn').attr('data-id'),
+                newName: $('#edit-collection-name').val().trim()
+            }
+        }).then((result) => {
+            location.reload()
+        }).fail((err) => {
+            alert(err.responseText);
+        });
+    });
+    /** *************************************************** */
+
+
+    $('#newCollectionModal').modal();
 
     // Helper function to add a new tag to an existing bookmark
     function addTagFromModal(bookmark, chip) {
@@ -198,12 +265,6 @@ $(document).ready( () => {
         console.log("New bookmark in collection " + targetCollectionID);
     });
 
-    // Close dropdowns if user clicks anywhere else in the window
-    $(window).on('click', (event) => {
-        $('.color-dropdown-trigger-bookmark').dropdown('close');
-        $('.show-all-tags').dropdown('close');
-    });
-
     $('.bookmark-btn').on('click', (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -221,13 +282,6 @@ $(document).ready( () => {
         }).fail( (err) => {
             alert(err.responseText);
         });
-    });
-
-    // Handle clicking 'EDIT' button on a collection
-    $('.collection-edit-btn').on('click', (event) => {
-        event.stopPropagation();
-        const target = $(event.target);
-        const id = target.attr('data-id');
     });
 
     // Configure materialize dropdown for showing remaining tags
@@ -403,5 +457,4 @@ $(document).ready( () => {
         });
     });
     
-
 });
