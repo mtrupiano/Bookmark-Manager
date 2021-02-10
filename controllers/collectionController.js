@@ -80,7 +80,7 @@ router.put("/name", function(request, response) {
             id: request.body.id
         }
     }).then( (result) => {
-        response.json(result.affectedRows);
+        response.json(result);
     }).catch( (err) => {
         response.status(500).json(err);
     });
