@@ -22,6 +22,11 @@ $(document).ready( () => {
         coverTrigger: false
     });
 
+    // Configure materialize dropdown for adding to a collection
+    $('.collection-add-dropdown-trigger').dropdown({
+        coverTrigger: false
+    })
+
     // Configure materialize dropdown for color picker
     $('.color-dropdown-trigger-bookmark').dropdown({
         coverTrigger: false,
