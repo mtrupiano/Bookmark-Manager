@@ -98,7 +98,24 @@ ul.color-dropdown {
 }
 
 .add-entity-dropdown {
-  border-radius: 5px;
+  /* border-radius: 14px; */
+  overflow-y: visible;
+  box-shadow: none !important;
+  --webkit-box-shadow: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.add-entity-dropdown>li {
+  width: 150px;
+  background-color: #fff;
+  border-radius: 14px;
+  margin-bottom: 3px;
+  --webkit-box-shadow:  0 2px 2px 0 rgb(175 89 175 / 14%), 
+                        0 3px 1px -2px rgb(175 89 175 / 12%), 
+                        0 1px 5px 0 rgb(175 89 175 / 20%);
+  box-shadow: 0 2px 2px 0 rgb(175 89 175 / 14%), 
+              0 3px 1px -2px rgb(175 89 175 / 12%), 
+              0 1px 5px 0 rgb(175 89 175 / 20%);
 }
 
 .color-dropdown-trigger-collection, 
@@ -202,6 +219,10 @@ ul.color-dropdown {
 
 .modal .btn {
   border-radius: 18px;
+}
+
+#modal-go-btn {
+  width: 100%;
 }
 
 @media only screen and (min-width: 993px) {
