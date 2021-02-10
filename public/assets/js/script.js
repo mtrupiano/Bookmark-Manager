@@ -113,7 +113,15 @@ $(document).ready( () => {
         onOpenStart: (modal, trigger) => {
             const currentName = $(modal).attr('data-current-name');
             $('#edit-collection-name').val(currentName);
-            M.updateTextFields();
+            $.ajax({
+                url: '/api/collections/path?id=' + $(modal).attr('data-id'),
+                method: 'GET'
+            }).then( (result) => {
+                $('#parent-collection-path').text(result);
+                M.updateTextFields();
+            }).fail((err) => {
+                alert(err.responseText);
+            });
         }
     });
 
@@ -122,6 +130,7 @@ $(document).ready( () => {
         event.stopPropagation();
         const target = $(event.target);
         $('#edit-collection-modal').attr('data-current-name', target.attr('data-current-name'));
+        $('#edit-collection-modal').attr('data-id', target.attr('data-id'));
         $('#edit-collection-save-btn').attr('data-id', target.attr('data-id'));
         $('#edit-collection-modal').modal('open');
         const id = target.attr('data-id');

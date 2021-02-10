@@ -24,9 +24,15 @@ router.get("/", function(request, response) {
     });
 });
 
+// Get the path to a specified collection
 router.get('/path', async (request, response) => {
     if (!request.session.user) {
         response.status(401).send("Not logged in");
+        return;
+    }
+
+    if (!request.query.id) {
+        response.status(400).send('Collection ID not specified');
         return;
     }
 

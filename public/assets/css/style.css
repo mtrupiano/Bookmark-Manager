@@ -98,7 +98,6 @@ ul.color-dropdown {
 }
 
 .add-entity-dropdown {
-  /* border-radius: 14px; */
   overflow-y: visible;
   box-shadow: none !important;
   --webkit-box-shadow: none;
@@ -109,7 +108,7 @@ ul.color-dropdown {
   width: 150px;
   background-color: #fff;
   border-radius: 14px;
-  margin-bottom: 3px;
+  margin: 4px 0;
   --webkit-box-shadow:  0 2px 2px 0 rgb(175 89 175 / 14%), 
                         0 3px 1px -2px rgb(175 89 175 / 12%), 
                         0 1px 5px 0 rgb(175 89 175 / 20%);
@@ -223,6 +222,15 @@ ul.color-dropdown {
 
 #modal-go-btn {
   width: 100%;
+}
+
+#parent-collection-path {
+  margin-left: 5px;
+  padding: 3px 20px;
+  border-radius: 16px;
+  font-size: 16px;
+  color: rgba(31, 31, 31, 0.9);
+  background-color: rgba(226, 138, 226, 0.8);
 }
 
 @media only screen and (min-width: 993px) {
