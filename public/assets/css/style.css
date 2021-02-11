@@ -37,12 +37,13 @@ a {
 }
 
 /* Custom scrollbar for modal forms */
-.modal::-webkit-scrollbar {
+.modal::-webkit-scrollbar-thumb {
   width: 12px;
   border-radius: 12px;
-  color: rgb(80, 73, 73)
+  background-color: rgb(80, 73, 73)
 }
-.modal::-webkit-scrollbar-track {
+.modal::-webkit-scrollbar-track-piece, 
+.modal::-webkit-scrollbar-track-piece {
   background-color: transparent;
 }
 
