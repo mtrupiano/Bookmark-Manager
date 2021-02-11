@@ -36,6 +36,16 @@ a {
   background-color:  #fff;
 }
 
+/* Custom scrollbar for modal forms */
+.modal::-webkit-scrollbar {
+  width: 12px;
+  border-radius: 12px;
+  color: rgb(80, 73, 73)
+}
+.modal::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 .nothing-here-body {
   border-radius: 5px;
   margin: 0.5rem;
