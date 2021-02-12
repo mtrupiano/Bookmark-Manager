@@ -147,41 +147,41 @@ router.post("/", async (request, response) => {
             await db.sequelize.models.bookmark_collections.bulkCreate(insertArr));
     } 
                 
-    // if (request.body.tags !== null && request.body.tags.length > 0) {
-    //     const findTagsResult = await db.Tag.findAll({
-    //         where: {
-    //             name: { [ Op.in ]: request.body.tags }
-    //         },
-    //         attributes: ['name', 'id']
-    //     });
+    if (request.body.tags !== null && request.body.tags.length > 0) {
+        const findTagsResult = await db.Tag.findAll({
+            where: {
+                name: { [ Op.in ]: request.body.tags }
+            },
+            attributes: ['name', 'id']
+        });
 
-    //     queryResults.push(findTagsResult);
+        queryResults.push(findTagsResult);
 
-    //     const foundNames = findTagsResult.map(r => r.name);
-    //     const tagArr = findTagsResult.map( 
-    //         e => ({ BookmarkId: queryResults[0].dataValues.id, TagId: e.id })
-    //     );
+        const foundNames = findTagsResult.map(r => r.name);
+        const tagArr = findTagsResult.map( 
+            e => ({ BookmarkId: queryResults[0].dataValues.id, TagId: e.id })
+        );
 
-    //     for (let i = 0; i < request.body.tags.length; i++) {
-    //         if (!foundNames.includes(request.body.tags[i])) {
-    //             const newTag = await db.Tag.create({
-    //                 name: request.body.tags[i],
-    //                 UserId: request.session.user.id
-    //             });
+        for (let i = 0; i < request.body.tags.length; i++) {
+            if (!foundNames.includes(request.body.tags[i])) {
+                const newTag = await db.Tag.create({
+                    name: request.body.tags[i],
+                    UserId: request.session.user.id
+                });
 
-    //             queryResults.push(newTag);
+                queryResults.push(newTag);
 
-    //             tagArr.push({ 
-    //                 BookmarkId: queryResults[0].dataValues.id, 
-    //                 TagId: newTag.dataValues.id
-    //             });
-    //         }
-    //     }
+                tagArr.push({ 
+                    BookmarkId: queryResults[0].dataValues.id, 
+                    TagId: newTag.dataValues.id
+                });
+            }
+        }
 
-    //     queryResults.push(
-    //         await db.sequelize.models.bookmark_tags.bulkCreate(tagArr));
+        queryResults.push(
+            await db.sequelize.models.bookmark_tags.bulkCreate(tagArr));
 
-    // }
+    }
 
     response.json(queryResults);
 

@@ -422,20 +422,25 @@ $(document).ready( () => {
 
     $('#add-bookmark-btn').on('click', (event) => {
         event.stopPropagation();
+        const queryParams = {
+            name: $('#bookmark-name').val().trim(),
+            url: $('#bookmark-url').val(),
+            comment: $('#bookmark-comment').val().trim(),
+            tags: tags
+        }
 
+        if ($('#newBookmarkModal').attr('data-parent')) {
+            queryParams.collections = [$('#newBookmarkModal').attr('data-parent')];
+        }
+
+        console.log(queryParams);
         $.ajax( {
             url: '/api/bookmarks/',
             type: "POST",
-            data: {
-                'name': $('#bookmark-name').val().trim(),
-                'url': $('#bookmark-url').val(),
-                'comment': $('#bookmark-comment').val().trim(),
-                'tags': tags,
-                'collections': [$('#newBookmarkModal').attr('data-parent')]
-            }
-        }).then( (e) => {
+            data: queryParams
+        }).then( (results) => {
             $('.modal').modal('close');
-            tags = [];
+            tags.length = 0;
             location.reload();
         }).fail( (err) => {
             alert(err.responseText);
