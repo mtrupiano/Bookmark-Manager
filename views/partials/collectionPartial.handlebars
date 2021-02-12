@@ -1,95 +1,94 @@
 <li>
-    <a data-id="{{id}}" class="collapsible-header entity-entry valign-wrapper">
-        <i class="material-icons">folder</i>
+    <a data-id='{{id}}' class='collapsible-header entity-entry valign-wrapper'>
+        <i class='material-icons'>folder</i>
         <span id='collection-li-name-{{id}}'>{{name}}</span>
-        <div class="entity-buttons">
+        <div class='entity-buttons'>
             <button id='collection-edit-btn-{{id}}' 
                 class='btn entity-btn collection-edit-btn modal-trigger'
                 data-current-name='{{name}}' 
                 data-target='edit-collection-modal' 
                 data-id='{{id}}'>EDIT</button>
-            <button class="btn entity-btn collection-move-btn" data-id="{{id}}">MOVE</button>
-            <button class="btn entity-btn collection-delete-btn" data-id="{{id}}">DELETE</button>
+            <button class='btn entity-btn collection-move-btn' data-id='{{id}}'>MOVE</button>
+            <button class='btn entity-btn collection-delete-btn' data-id='{{id}}'>DELETE</button>
         </div>
 
-        <div class="dropdown-trigger collection-add-dropdown-trigger add-entity-trigger valign-wrapper" 
-            data-target="add-to-collection-{{id}}">
-            <i class="material-icons" style="margin: 0; color: grey">add</i>
+        <div class='dropdown-trigger collection-add-dropdown-trigger add-entity-trigger valign-wrapper' 
+            data-target='add-to-collection-{{id}}'>
+            <i class='material-icons' style='margin: 0; color: grey'>add</i>
         </div>
-        <ul id="add-to-collection-{{id}}" class="dropdown-content add-entity-dropdown">
-            <li class='valign-wrapper'><div class="new-collection" data-id="{{id}}">New Collection</div></li>
-            <li class='valign-wrapper'><div class="new-bookmark" data-id="{{id}}">New Bookmark</div></li>
+        <ul id='add-to-collection-{{id}}' class='dropdown-content add-entity-dropdown'>
+            <li class='valign-wrapper'><div class='new-collection' data-id='{{id}}'>New Collection</div></li>
+            <li class='valign-wrapper'><div class='new-bookmark' data-id='{{id}}'>New Bookmark</div></li>
         </ul>
 
         {{#if color}}
 
-        <div class="dropdown-trigger color-dropdown-trigger-collection valign-wrapper" data-id={{id}} 
-            data-target="collection-color-dropdown-{{id}}">
+        <div class='dropdown-trigger color-dropdown-trigger-collection valign-wrapper' data-id='{{id}}' 
+            data-target='collection-color-dropdown-{{id}}'>
             {{#if (isWhite color)}}
-            <i class="material-icons" 
-                style="margin: 0; color: rgb(56, 56, 56)">panorama_fish_eye</i>
+            <i class='material-icons' 
+                style='margin: 0; color: rgb(56, 56, 56)'>panorama_fish_eye</i>
             {{else}}
-            <i class="material-icons" style="margin: 0; color: {{color}}">circle</i>
+            <i class='material-icons' style='margin: 0; color: {{color}}'>circle</i>
             {{/if}}
         </div>
 
-        <ul id="collection-color-dropdown-{{id}}" 
-           class="dropdown-content color-dropdown color-dropdown-collection" data-id="{{id}}">
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" 
-                        style="color: rgb(56, 56, 56)">panorama_fish_eye</i>
+        <ul id='collection-color-dropdown-{{id}}' 
+           class='dropdown-content color-dropdown color-dropdown-collection' data-id='{{id}}'>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' 
+                        style='color: rgb(56, 56, 56)'>panorama_fish_eye</i>
                 </div>
             </li>
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: black">circle</i>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' style='color: black'>circle</i>
                 </div>
             </li>
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: red">circle</i>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' style='color: red'>circle</i>
                 </div>
             </li>
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: green">circle</i>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' style='color: green'>circle</i>
                 </div>
             </li>
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: blue">circle</i>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' style='color: blue'>circle</i>
                 </div>
             </li>
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: yellow">circle</i>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' style='color: yellow'>circle</i>
                 </div>
             </li>
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: orange">circle</i>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' style='color: orange'>circle</i>
                 </div>
             </li>
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: purple">circle</i>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' style='color: purple'>circle</i>
                 </div>
             </li>
-            <li class="valign-wrapper">
-                <div class="color-dropdown-select valign-wrapper">
-                    <i class="material-icons" style="color: pink">circle</i>
+            <li class='valign-wrapper'>
+                <div class='color-dropdown-select valign-wrapper'>
+                    <i class='material-icons' style='color: pink'>circle</i>
                 </div>
             </li>
         </ul>
 
         {{/if}}
-
-
     </a>
+
     {{#if collections}}
-        <div class="collapsible-body">
-            <ul class="collapsible expandable">
+        <div class='collapsible-body'>
+            <ul class='collapsible expandable'>
             {{#each collections}}
                 {{> collectionPartial}}
             {{/each}}
@@ -105,8 +104,8 @@
 
     {{#unless collections}}
         {{#if bookmarks}}
-        <div class="collapsible-body">
-            <ul class="collapsible expandable">
+        <div class='collapsible-body'>
+            <ul class='collapsible expandable'>
             {{#each bookmarks}}
             {{> bookmarkPartial}}
             {{/each}}
@@ -115,9 +114,9 @@
         {{/if}}
 
         {{#unless bookmarks}}
-        <div class="collapsible-body ">
-        <div class="nothing-here-body">
-            <div class="nothing-here">Nothing here!</div>
+        <div class='collapsible-body'>
+        <div class='nothing-here-body'>
+            <div class='nothing-here'>Nothing here!</div>
         </div>
         </div>
         {{/unless}}
