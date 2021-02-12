@@ -36,17 +36,6 @@ a {
   background-color:  #fff;
 }
 
-/* Custom scrollbar for modal forms */
-.modal::-webkit-scrollbar-thumb {
-  width: 12px;
-  border-radius: 12px;
-  background-color: rgb(80, 73, 73)
-}
-.modal::-webkit-scrollbar-track-piece, 
-.modal::-webkit-scrollbar-track-piece {
-  background-color: transparent;
-}
-
 .nothing-here-body {
   border-radius: 5px;
   margin: 0.5rem;
@@ -235,13 +224,10 @@ ul.color-dropdown {
   width: 100%;
 }
 
-#parent-collection-path {
-  margin-left: 5px;
-  padding: 3px 20px;
-  border-radius: 16px;
-  font-size: 16px;
-  color: rgba(31, 31, 31, 0.9);
-  background-color: rgba(226, 138, 226, 0.8);
+#parent-collection-path, #path-current-name {
+  margin-top: 0;
+  font-size: 18px;
+  color: rgba(31, 31, 31, 0.6);
 }
 
 @media only screen and (min-width: 993px) {

@@ -1,10 +1,13 @@
 <li>
-    <a value="{{id}}" class="collapsible-header entity-entry valign-wrapper">
+    <a data-id="{{id}}" class="collapsible-header entity-entry valign-wrapper">
         <i class="material-icons">folder</i>
-        {{name}}
+        <span id='collection-li-name-{{id}}'>{{name}}</span>
         <div class="entity-buttons">
-            <button class="btn entity-btn collection-edit-btn modal-trigger" 
-                data-current-name="{{name}}" data-target='edit-collection-modal' data-id="{{id}}">EDIT</button>
+            <button id='collection-edit-btn-{{id}}' 
+                class='btn entity-btn collection-edit-btn modal-trigger'
+                data-current-name='{{name}}' 
+                data-target='edit-collection-modal' 
+                data-id='{{id}}'>EDIT</button>
             <button class="btn entity-btn collection-move-btn" data-id="{{id}}">MOVE</button>
             <button class="btn entity-btn collection-delete-btn" data-id="{{id}}">DELETE</button>
         </div>
@@ -87,24 +90,37 @@
     {{#if collections}}
         <div class="collapsible-body">
             <ul class="collapsible expandable">
-                {{#if collections}}
-                {{#each collections}}
-                    {{> collectionPartial}}
+            {{#each collections}}
+                {{> collectionPartial}}
+            {{/each}}
+
+            {{#if bookmarks}}
+                {{#each bookmarks}}
+                    {{> bookmarkPartial}}
                 {{/each}}
-
-
-                {{/if}}
+            {{/if}}
             </ul>
         </div>
     {{/if}}
 
     {{#unless collections}}
+        {{#if bookmarks}}
+        <div class="collapsible-body">
+            <ul class="collapsible expandable">
+            {{#each bookmarks}}
+            {{> bookmarkPartial}}
+            {{/each}}
+            </ul>
+        </div>
+        {{/if}}
+
+        {{#unless bookmarks}}
         <div class="collapsible-body ">
         <div class="nothing-here-body">
             <div class="nothing-here">Nothing here!</div>
         </div>
-
         </div>
+        {{/unless}}
     {{/unless}}
 </li>
 

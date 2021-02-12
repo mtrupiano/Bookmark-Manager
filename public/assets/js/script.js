@@ -16,7 +16,6 @@ $(document).ready( () => {
         margin: 3
     });
 
-    // $('.modal').modal();
     $('select').formSelect();
     $('#modal-color-select').dropdown({
         coverTrigger: false,
@@ -51,11 +50,13 @@ $(document).ready( () => {
     $('#newBookmarkModal').modal({
         // When the modal is first opened, load content
         onOpenStart: function(modal, trigger) {
-            const id = $($(trigger).children()[0]).attr("value");
+            const id = $($(trigger).children()[0]).attr("data-id");
             if (id) {
                 $('#modal-go-btn').show();
                 $('#add-bookmark-btn').hide();
+                $('#save-bookmark-btn').show();
                 $('#bookmark-modal-header').text("View/edit Bookmark");
+                
                 $.ajax({
                     url: '/api/bookmarks?id=' + id,
                     method: 'GET'
@@ -65,7 +66,6 @@ $(document).ready( () => {
                     $('.bookmark-btn').attr('data-url', res.url);
                     $('#bookmark-comment').val(res.comment);
                     $('#save-bookmark-btn').attr("data-id", id);
-                    $('#save-bookmark-btn').show();
                     const tagNames = res.Tags.map(t => ( {tag: t.tagName} ));
                     console.log(tagNames);
 
@@ -84,6 +84,8 @@ $(document).ready( () => {
             } else {
                 $('#modal-go-btn').hide();
                 $('#add-bookmark-btn').show();
+                $('#save-bookmark-btn').hide();
+                $('#bookmark-modal-header').text("New Bookmark");
                 $('.modal-chips').chips({
                     secondaryPlaceholder: '+Tag',
                     onChipAdd: (event, chip) => {
@@ -118,6 +120,7 @@ $(document).ready( () => {
                 method: 'GET'
             }).then( (result) => {
                 $('#parent-collection-path').text(result);
+                $('#path-current-name').text(currentName);
                 M.updateTextFields();
             }).fail((err) => {
                 alert(err.responseText);
@@ -148,15 +151,20 @@ $(document).ready( () => {
 
     // Submit the api request to change the collection name when the 'Save' button is clicked
     $('#edit-collection-save-btn').on('click', (event) => {
+        event.preventDefault();
+        const id = $('#edit-collection-save-btn').attr('data-id');
+        const newName = $('#edit-collection-name').val().trim();
         $.ajax({
             url: '/api/collections/name',
             method: 'PUT',
             data: { 
-                id: $('#edit-collection-save-btn').attr('data-id'),
-                newName: $('#edit-collection-name').val().trim()
+                id, newName
             }
         }).then((result) => {
-            location.reload()
+            console.log(result);
+            $(`#collection-li-name-${id}`).text(newName);
+            $(`#collection-edit-btn-${id}`).attr('data-current-name', newName);
+            $('#edit-collection-modal').modal('close');
         }).fail((err) => {
             alert(err.responseText);
         });
@@ -262,27 +270,33 @@ $(document).ready( () => {
         event.stopPropagation();
     });
 
+    // Trigger the new bookmark modal when the 'new collection' dropdown button is clicked
     $('.new-collection').on('click', (event) => {
         event.stopPropagation();
         const targetCollectionID = $(event.target).attr('data-id');
-        console.log("New sub-collection in collection " + targetCollectionID);
+
+        $('#newCollectionModal').attr('data-parent', targetCollectionID);
+        $('#newCollectionModal').modal('open');
     });
 
+    // Trigger the new bookmark modal when the 'new bookmark' dropdown button is clicked
     $('.new-bookmark').on('click',(event) => {
         event.stopPropagation();
         const targetCollectionID = $(event.target).attr('data-id');
-        console.log("New bookmark in collection " + targetCollectionID);
+
+        $('#newBookmarkModal').attr('data-parent', targetCollectionID);
+        $('#newBookmarkModal').modal('open');
     });
 
     $('.bookmark-btn').on('click', (event) => {
         event.preventDefault();
         event.stopPropagation();
-        window.open($(event.target).attr("data-url"));
+        window.open($(event.target).attr('data-url'));
     });
 
     $('.bookmark-delete-btn').on('click', (event) => {
         event.stopPropagation();
-        const id = $(event.target).attr("data-id");
+        const id = $(event.target).attr('data-id');
         $.ajax({
             url: "/api/bookmarks/" + id,
             method: "DELETE"
@@ -306,10 +320,10 @@ $(document).ready( () => {
 
     $('.collection-delete-btn').on('click', (event) => {
         event.stopPropagation();
-        const id = $(event.target).attr("data-id");
+        const id = $(event.target).attr('data-id');
         $.ajax({
-            url: "/api/collections/" + id,
-            method: "DELETE"
+            url: '/api/collections/' + id,
+            method: 'DELETE'
         }).then( (res) => {
             location.reload();
         }).fail((err) => {
@@ -319,12 +333,12 @@ $(document).ready( () => {
 
     $('.bookmark-move-btn').on('click', (event) => {
         event.stopPropagation();
-        const id = $(event.target).attr("data-id");
+        const id = $(event.target).attr('data-id');
     });
 
     $('.collection-move-btn').on('click', (event) => {
         event.stopPropagation();
-        const id = $(event.target).attr("data-id");
+        const id = $(event.target).attr('data-id');
     });
 
     // Handle changing an entity's color
@@ -334,38 +348,38 @@ $(document).ready( () => {
         const target = $(event.target);
         let newColor, targetEntityID, targetDropdownList, apiURL, targetEntity;
 
-        if (target.prop("tagName") === "A") {
+        if (target.prop('tagName') === 'A') {
 
             targetDropdownList = target.parent().parent();
-            targetEntityID = targetDropdownList.attr("data-id");
+            targetEntityID = targetDropdownList.attr('data-id');
 
-            newColor = $(target.children()[0]).css("color");
-            if (newColor === "rgb(56, 56, 56)") {
-                newColor = "rgb(255, 255, 255)";
+            newColor = $(target.children()[0]).css('color');
+            if (newColor === 'rgb(56, 56, 56)') {
+                newColor = 'rgb(255, 255, 255)';
             }
 
-        } else if (target.prop("tagName") === "I") {
+        } else if (target.prop('tagName') === 'I') {
 
             targetDropdownList = target.parent().parent().parent();
-            targetEntityID = targetDropdownList.attr("data-id");
+            targetEntityID = targetDropdownList.attr('data-id');
 
             newColor = target.css("color");
-            if (newColor === "rgb(56, 56, 56)") {
-                newColor = "rgb(255, 255, 255)";
+            if (newColor === 'rgb(56, 56, 56)') {
+                newColor = 'rgb(255, 255, 255)';
             }
         }
         
-        if (targetDropdownList.hasClass("color-dropdown-collection")) {
-            apiURL = "/api/collections/color";
+        if (targetDropdownList.hasClass('color-dropdown-collection')) {
+            apiURL = '/api/collections/color';
             targetEntity = $(`.color-dropdown-trigger-collection[data-id=${targetEntityID}]`)
         } else {
-            apiURL = "/api/bookmarks/color";
+            apiURL = '/api/bookmarks/color';
             targetEntity = $(`.color-dropdown-trigger-bookmark[data-id=${targetEntityID}]`)
         }
 
         $.ajax({
             url: apiURL,
-            type: "PUT",
+            type: 'PUT',
             data: {
                 "ids": [targetEntityID],
                 "newColor": newColor
@@ -387,46 +401,50 @@ $(document).ready( () => {
 
     $('#add-collection-btn').on('click', (event) => {
         event.stopPropagation();
-        const newName = $('#new-collection-name').val().trim();
+        const params = {};
+        params.name = $('#new-collection-name').val().trim();
+
+        if ($('#newCollectionModal').attr('data-parent')) {
+            params.ParentCollection = $('#newCollectionModal').attr('data-parent');
+        }
+
         $.ajax({
-            url: '/api/collections',
+            url: '/api/collections/',
             type: "POST",
-            data: {
-                "name": newName,
-            }
+            data: params
         }).then( (res) => {
             $('.modal').modal('close');
             location.reload();
         }).fail( (err) => {
             alert(err.responseText);
-        })
+        });
     });
 
     $('#add-bookmark-btn').on('click', (event) => {
         event.stopPropagation();
-        const newName = $('#bookmark-name').val().trim();
-        const URL = $('#bookmark-url').val();
-        const comment = $('#bookmark-comment').val().trim();
 
         $.ajax( {
             url: '/api/bookmarks/',
             type: "POST",
             data: {
-                'name': newName,
-                'url': URL,
-                'comment': comment,
-                'tags': tags
+                'name': $('#bookmark-name').val().trim(),
+                'url': $('#bookmark-url').val(),
+                'comment': $('#bookmark-comment').val().trim(),
+                'tags': tags,
+                'collections': [$('#newBookmarkModal').attr('data-parent')]
             }
         }).then( (e) => {
             $('.modal').modal('close');
+            tags = [];
             location.reload();
         }).fail( (err) => {
             alert(err.responseText);
-        })
+        });
     });
 
     // Handle saving edits to an existing bookmark
     $('#save-bookmark-btn').on('click', (event) => {
+        event.preventDefault();
         const id = $('#save-bookmark-btn').attr("data-id");
         $.ajax({
             url: "/api/bookmarks/name",
@@ -459,11 +477,15 @@ $(document).ready( () => {
             }).fail((err) => {
                 alert(err.responseText);
             });
-
             location.reload();
         }).fail( (err) => {
             alert(err.responseText);
         });
     });
     
+    $('.cancel-btn').on('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        $('.modal').modal('close');
+    });
 });

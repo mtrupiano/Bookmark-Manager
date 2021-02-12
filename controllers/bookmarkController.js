@@ -117,7 +117,7 @@ router.get("/uncategorized", async function(request, response) {
 });
 
 // Create a new bookmark
-router.post("/", function(request, response) {
+router.post("/", async (request, response) => {
     // Check if logged in
     if (!request.session.user) {
         response.status(401).send("Not logged in");
@@ -126,74 +126,64 @@ router.post("/", function(request, response) {
 
     const queryResults = [];
 
-    db.Bookmark.create({
+    queryResults.push(await db.Bookmark.create({
         name: request.body.name,
         url: request.body.url,
         comment: request.body.comment,
         color: request.body.color,
         UserId: request.session.user.id
-    }).then( (result) => {
-        queryResults.push(result);
-        if (request.body.collections) {
-            const insertArr = 
-                request.body.collections.map( 
-                    e => ({ BookmarkId: result.dataValues.id, CollectionId: e })
-                );
+    }));
+
+    if (request.body.collections) {
+        const insertArr = 
+            request.body.collections.map( 
+                e => ({ 
+                    BookmarkId: queryResults[0].dataValues.id,
+                    CollectionId: e
+                })
+            );
+
+        queryResults.push(
+            await db.sequelize.models.bookmark_collections.bulkCreate(insertArr));
+    } 
                 
-            db.sequelize.models.bookmark_collections.bulkCreate(insertArr)
-                .then( (linkResult) => {
-                    queryResults.push(linkResult);
-                }).catch( (err) => {
-                    response.status(500).json(err);
-                });
-        } 
-                
-        if (request.body.tags !== null) {
-            db.Tag.findAll({
-                where: {
-                    name: { [ Op.in ]: request.body.tags }
-                },
-                attributes: ['name', 'id']
-            }).then( async (results) => {
-                queryResults.push(results);
+    // if (request.body.tags !== null && request.body.tags.length > 0) {
+    //     const findTagsResult = await db.Tag.findAll({
+    //         where: {
+    //             name: { [ Op.in ]: request.body.tags }
+    //         },
+    //         attributes: ['name', 'id']
+    //     });
 
-                const foundNames = results.map(r => r.name);
-                const tagArr = results.map( 
-                    e => ({ BookmarkId: result.dataValues.id, TagId: e.id })
-                );
+    //     queryResults.push(findTagsResult);
 
-                for (let i = 0; i < request.body.tags.length; i++) {
-                    if (!foundNames.includes(request.body.tags[i])) {
-                        const newTag = await db.Tag.create({
-                            name: request.body.tags[i],
-                            UserId: request.session.user.id
-                        });
+    //     const foundNames = findTagsResult.map(r => r.name);
+    //     const tagArr = findTagsResult.map( 
+    //         e => ({ BookmarkId: queryResults[0].dataValues.id, TagId: e.id })
+    //     );
 
-                        queryResults.push(newTag);
+    //     for (let i = 0; i < request.body.tags.length; i++) {
+    //         if (!foundNames.includes(request.body.tags[i])) {
+    //             const newTag = await db.Tag.create({
+    //                 name: request.body.tags[i],
+    //                 UserId: request.session.user.id
+    //             });
 
-                        tagArr.push({ 
-                            BookmarkId: result.dataValues.id, 
-                            TagId: newTag.dataValues.id
-                        });
-                    }
-                }
+    //             queryResults.push(newTag);
 
-                db.sequelize.models.bookmark_tags.bulkCreate(tagArr)
-                    .then( (tagLinkResult) => {
-                        queryResults.push(tagLinkResult);
-                    }).catch( (err) => {
-                        response.status(500).json(err);
-                    });
-            }).catch( (err) => {
-                response.status(500).json(err);
-            })
-        }
+    //             tagArr.push({ 
+    //                 BookmarkId: queryResults[0].dataValues.id, 
+    //                 TagId: newTag.dataValues.id
+    //             });
+    //         }
+    //     }
 
-        response.json(queryResults);
-        
-    }).catch( (err) => {
-        response.status(500).json(err);
-    });
+    //     queryResults.push(
+    //         await db.sequelize.models.bookmark_tags.bulkCreate(tagArr));
+
+    // }
+
+    response.json(queryResults);
 
 });
 
