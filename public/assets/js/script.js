@@ -399,6 +399,7 @@ $(document).ready( () => {
         });
     });
 
+    // Handle adding new collection (from modal form)
     $('#add-collection-btn').on('click', (event) => {
         event.stopPropagation();
         const params = {};
@@ -420,6 +421,7 @@ $(document).ready( () => {
         });
     });
 
+    // Handle adding a new bookmark (from modal form)
     $('#add-bookmark-btn').on('click', (event) => {
         event.stopPropagation();
         const queryParams = {
