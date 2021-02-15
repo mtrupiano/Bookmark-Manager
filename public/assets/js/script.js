@@ -38,12 +38,10 @@ $(document).ready( () => {
     // Configure materialize dropdown for color picker
     $('.color-dropdown-trigger-bookmark').dropdown({
         coverTrigger: false,
-        onOpenEnd: () => { // slightly reposition dropdown after it's done opening
-            const left = $('.color-dropdown').css("left");
-            const pix = parseFloat(left.substring(0, left.length - 2)) - 5;
+    });
 
-            $('.color-dropdown').css("left", pix + 'px');
-        }
+    $('.color-dropdown-trigger-collection').dropdown({
+        coverTrigger: false
     });
 
     // Configure modal form for creating/viewing a bookmark
@@ -109,7 +107,7 @@ $(document).ready( () => {
      *      edit button
      *      name edit input field
      *      save button
-    *******************************************************/
+     ******************************************************/
     // Configure the modal form
     $('#edit-collection-modal').modal({
         onOpenStart: (modal, trigger) => {
@@ -136,8 +134,6 @@ $(document).ready( () => {
         $('#edit-collection-modal').attr('data-id', target.attr('data-id'));
         $('#edit-collection-save-btn').attr('data-id', target.attr('data-id'));
         $('#edit-collection-modal').modal('open');
-        const id = target.attr('data-id');
-        
     });
 
     // Disable save button if name field empty

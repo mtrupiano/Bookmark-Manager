@@ -12,6 +12,7 @@
             <button class='btn entity-btn collection-delete-btn' data-id='{{id}}'>DELETE</button>
         </div>
 
+        {{!-- In-lin dropdown for adding a bookmark or sub-collection to this collection --}}
         <div class='dropdown-trigger collection-add-dropdown-trigger add-entity-trigger valign-wrapper' 
             data-target='add-to-collection-{{id}}'>
             <i class='material-icons' style='margin: 0; color: grey'>add</i>
@@ -21,8 +22,8 @@
             <li class='valign-wrapper'><div class='new-bookmark' data-id='{{id}}'>New Bookmark</div></li>
         </ul>
 
+        {{!-- In-line color selector dropdown --}}
         {{#if color}}
-
         <div class='dropdown-trigger color-dropdown-trigger-collection valign-wrapper' data-id='{{id}}' 
             data-target='collection-color-dropdown-{{id}}'>
             {{#if (isWhite color)}}
@@ -33,6 +34,7 @@
             {{/if}}
         </div>
 
+        {{!-- Content for color dropdown list --}}
         <ul id='collection-color-dropdown-{{id}}' 
            class='dropdown-content color-dropdown color-dropdown-collection' data-id='{{id}}'>
             <li class='valign-wrapper'>

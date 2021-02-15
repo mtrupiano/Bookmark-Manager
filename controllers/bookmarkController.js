@@ -134,6 +134,7 @@ router.post("/", async (request, response) => {
         UserId: request.session.user.id
     }));
 
+    // If request specifies parent collections, add links to collections table
     if (request.body.collections) {
         const insertArr = 
             request.body.collections.map( 
@@ -146,7 +147,8 @@ router.post("/", async (request, response) => {
         queryResults.push(
             await db.sequelize.models.bookmark_collections.bulkCreate(insertArr));
     } 
-                
+    
+    // If request specifies tags, add links to tags table
     if (request.body.tags !== null && request.body.tags.length > 0) {
         const findTagsResult = await db.Tag.findAll({
             where: {
