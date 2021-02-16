@@ -394,8 +394,6 @@ $(document).ready( () => {
                 newColor = 'rgb(255, 255, 255)';
             }
         }
-
-        console.log(targetEntityID);
         
         if (targetDropdownList.hasClass('color-dropdown-collection')) {
             apiURL = '/api/collections/color';
