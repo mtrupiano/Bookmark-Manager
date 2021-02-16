@@ -17,10 +17,6 @@ $(document).ready( () => {
     });
 
     $('select').formSelect();
-    $('#modal-color-select').dropdown({
-        coverTrigger: false,
-        constrainWidth: false
-    });
 
     // Close dropdowns if user clicks anywhere else in the window
     $(window).on('click', (event) => {
@@ -42,6 +38,11 @@ $(document).ready( () => {
 
     $('.color-dropdown-trigger-collection').dropdown({
         coverTrigger: false
+    });
+
+    $('#color-dropdown-trigger-modal').dropdown({
+        coverTrigger: false,
+        container: document.getElementById('list-container')
     });
 
     // Configure modal form for creating/viewing a bookmark
@@ -112,9 +113,30 @@ $(document).ready( () => {
     $('#edit-collection-modal').modal({
         onOpenStart: (modal, trigger) => {
             const currentName = $(modal).attr('data-current-name');
+            const id = $(modal).attr('data-id');
+            console.log(id);
+            $.ajax({
+                url: '/api/collections/color?id=' + id,
+                method: 'GET'
+            }).then( (result) => {
+                if (result.color === 'rgb(255, 255, 255)') {
+                    $('#modal-color-display').text('panorama_fish_eye');
+                    $('#modal-color-display').css('color', 'rgb(56, 56, 56)');
+                } else if (result.color === null) {
+                    $('#modal-color-display').text('remove');
+                    $('#modal-color-display').css('color', 'rgb(56, 56, 56)');
+                } else {
+                    $('#modal-color-display').text('circle');
+                    $('#modal-color-display').css('color', result.color);
+                }
+            }).fail( (err) => {
+                alert(err.responseText);
+            });
+
+            $('#modal-color-select-dropdown').attr('data-id', id);
             $('#edit-collection-name').val(currentName);
             $.ajax({
-                url: '/api/collections/path?id=' + $(modal).attr('data-id'),
+                url: '/api/collections/path?id=' + id,
                 method: 'GET'
             }).then( (result) => {
                 $('#parent-collection-path').text(result);
@@ -284,6 +306,14 @@ $(document).ready( () => {
         $('#newBookmarkModal').modal('open');
     });
 
+    $('.new-color').on('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const id = $(event.target).attr('data-id');
+        console.log(id);
+    });
+
     $('.bookmark-btn').on('click', (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -344,12 +374,12 @@ $(document).ready( () => {
         const target = $(event.target);
         let newColor, targetEntityID, targetDropdownList, apiURL, targetEntity;
 
-        if (target.prop('tagName') === 'A') {
+        if (target.prop('tagName') === 'LI') {
 
-            targetDropdownList = target.parent().parent();
+            targetDropdownList = target.parent();
             targetEntityID = targetDropdownList.attr('data-id');
 
-            newColor = $(target.children()[0]).css('color');
+            newColor = ($($(target.children()[0]).children()[0])).css('color');
             if (newColor === 'rgb(56, 56, 56)') {
                 newColor = 'rgb(255, 255, 255)';
             }
@@ -364,13 +394,25 @@ $(document).ready( () => {
                 newColor = 'rgb(255, 255, 255)';
             }
         }
+
+        console.log(targetEntityID);
         
         if (targetDropdownList.hasClass('color-dropdown-collection')) {
             apiURL = '/api/collections/color';
-            targetEntity = $(`.color-dropdown-trigger-collection[data-id=${targetEntityID}]`)
+            targetEntity = $(`.color-dropdown-trigger-collection[data-id=${targetEntityID}]`);
         } else {
             apiURL = '/api/bookmarks/color';
             targetEntity = $(`.color-dropdown-trigger-bookmark[data-id=${targetEntityID}]`)
+        } 
+
+        if (targetDropdownList.attr('id') === 'modal-color-select-dropdown') {
+            if (newColor === 'rgb(255, 255, 255)') {
+                $('#modal-color-display').text('panorama_fish_eye');
+                $('#modal-color-display').css('color', 'rgb(56, 56, 56)');
+            } else {
+                $('#modal-color-display').text('circle');
+                $('#modal-color-display').css('color', newColor);
+            }
         }
 
         $.ajax({
@@ -382,7 +424,7 @@ $(document).ready( () => {
             },
             processData: true
         }).then( (res) => {
-
+            console.log(targetEntity.children()[0])
             if (newColor === "rgb(255, 255, 255)") {
                 $(targetEntity.children()[0]).text("panorama_fish_eye");
                 $(targetEntity.children()[0]).css("color", "rgb(56, 56, 56)");

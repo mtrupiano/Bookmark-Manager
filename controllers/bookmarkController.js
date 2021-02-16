@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 
-const {Op} = require('sequelize');
-const {QueryTypes} = require('sequelize');
+const { Op } = require('sequelize');
+const { QueryTypes } = require('sequelize');
 
 // Get bookmarks by various parameters
 router.get("/", function(request, response) {

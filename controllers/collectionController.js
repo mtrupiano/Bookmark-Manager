@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../models');
 
 const { Op } = require('sequelize');
+const { request, response } = require('express');
 
 // Get all collections that ARE NOT a sub-collection
 router.get("/", function(request, response) {
@@ -22,6 +23,19 @@ router.get("/", function(request, response) {
     }).catch ( (err) => {
         response.status(500).json(err);
     });
+});
+
+router.get('/color', (req, res) => {
+    db.Collection.findOne({
+        where: {
+            id: req.query.id
+        },
+        attributes: ['color']
+    }).then( (result) => {
+        res.json(result);
+    }).catch( (err) => {
+        response.status(500).json(err);
+    })
 });
 
 // Get the path to a specified collection
